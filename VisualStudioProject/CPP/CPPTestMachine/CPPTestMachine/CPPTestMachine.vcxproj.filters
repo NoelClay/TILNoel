@@ -18,5 +18,11 @@
     <ClCompile Include="day03.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="day04.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_04\Test_4.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
