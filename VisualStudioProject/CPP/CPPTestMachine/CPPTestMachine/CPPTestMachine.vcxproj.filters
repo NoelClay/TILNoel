@@ -24,5 +24,8 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_04\Test_4.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="day005.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
