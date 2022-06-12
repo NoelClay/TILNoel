@@ -43,7 +43,7 @@ string solution(string number, int k)
 #endif
 
 
-//답지
+//답지풀이
 #if 0
 //
 //

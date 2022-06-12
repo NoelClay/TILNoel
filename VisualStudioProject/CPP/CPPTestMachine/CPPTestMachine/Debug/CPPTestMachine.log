@@ -1,0 +1,31 @@
+﻿  Test_4.cpp
+  day005.cpp
+  day006.cpp
+  day018.cpp
+  day019.cpp
+  day020.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(1965,28): error C2677: 이항 '==': 'const _Ty' 형식을 사용하는 전역 연산자가 없거나 허용되는 변환이 없습니다.
+          with
+          [
+              _Ty=std::string
+          ]
+C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\CPPTestMachine\day020.cpp(25): message : 컴파일되는 함수 템플릿 인스턴스화 '_FwdIt std::remove<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,_Ty>(_FwdIt,const _FwdIt,const _Ty &)'에 대한 참조를 확인하세요.
+          with
+          [
+              _FwdIt=std::_String_iterator<std::_String_val<std::_Simple_types<char>>>,
+              _Elem=char,
+              _Ty=std::string
+          ]
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(1965,1): error C2446: '==': 'const char [3]'에서 'int'(으)로 변환되지 않았습니다.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xmemory(1965,31): message : 이 변환이 가능한 컨텍스트가 없습니다.
+C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\CPPTestMachine\day020.cpp(32): message : 컴파일되는 함수 템플릿 인스턴스화 '_FwdIt std::remove<std::_String_iterator<std::_String_val<std::_Simple_types<_Elem>>>,char[3]>(_FwdIt,const _FwdIt,const _Ty (&))'에 대한 참조를 확인하세요.
+          with
+          [
+              _FwdIt=std::_String_iterator<std::_String_val<std::_Simple_types<char>>>,
+              _Elem=char,
+              _Ty=char [3]
+          ]
+  day03.cpp
+  day04.cpp
+  Test_05.cpp
+  코드를 생성하고 있습니다...
