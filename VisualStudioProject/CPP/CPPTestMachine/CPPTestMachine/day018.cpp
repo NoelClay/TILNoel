@@ -4,7 +4,7 @@
 // 전체 스테이지 개수 N, 사용자가 도달한 스테이지의 번호가 담긴 stages 배열
 // 스테이지 번호 배열을 실패율이 높은 순서로 내림차순으로 정렬하여 리턴
 // 
-// 1<=N<=500, N^2 = 250000 백만이하
+// 1<=N<=500, N^2 = 250000 백만이하 이중포문가능
 // stages의 요소는 1이상 n+1 이하의 숫자. n+1은 최종클리어를 의미한다.
 // 같은 실패율이면 작은 스테이지가 앞쪽에 정렬. 스테이지에 도달한 유저가 없다면 실패율 0
 // 
@@ -21,6 +21,8 @@
 #include <algorithm>
 
 using namespace std;
+
+bool compare(pair<double, int> a, pair<double, int>b);
 
 vector<int> solution(int N, vector<int> stages) 
 {
@@ -50,8 +52,8 @@ vector<int> solution(int N, vector<int> stages)
 				total = total - cnt;	cnt = 0;
 			}
 		}
-		//if (curNum == stages[i])
-			cnt++;
+		cnt++;
+		//if (curNum == stages[i])	
 		//else if (curNum < stages[i])
 		//{
 		//	//순서쌍 벡터에 (실패율 계산식, 해당 스테이지번호)를 넣고
@@ -90,7 +92,5 @@ bool compare(pair<double, int> a, pair<double, int>b) {
 	else
 		return a.first > b.first;
 }
-
-
 
 #endif
