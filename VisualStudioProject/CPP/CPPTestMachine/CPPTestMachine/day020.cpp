@@ -81,3 +81,40 @@ int main() {
 }
 
 #endif
+
+#if 0
+// 짝지어 제거하기. 연속적으로 같은 값이 붙어서 존재할때 2개를 제거.
+// 배열 자료구조를 생각하면 중간에 삽입과 삭제가 일어날 경우 오버플로우가 심하게 발생
+// 스택 자료구조가 적당 top인덱스가 자동으로 맨 나중에 입력된 값을 알려주기때문에
+//
+#include<string>
+#include<stack>
+#include<iostream>
+
+using namespace std;
+
+int Solution(string s)
+{
+    stack<char> stack;
+
+    for (int i = 0; i < s.size(); i++)  //문자열을 순차로 탐색하면서
+    {
+        if (stack.empty() || stack.top() != s[i]) 
+            stack.push(s[i]);   //해당문자가 top요소와 일치하지 않으면 푸쉬
+        else                        
+            stack.pop();        
+        //해당문자가 top요소와 일치하면 푸쉬하지 않고 팝하면서 스택엔 짝지어진 문자열이 제거된 효과
+    }
+    if (stack.empty())   return 1;
+    else                 return 0;
+}
+
+int main()
+{
+    string strArr[4] = { "baabaa", "cdcd", "abcdeffedcba", "ababcecedlldfmfm" };
+
+    for (int i = 0; i < 4; i++) {
+        cout << Solution(strArr[i]) << "\n";
+    }
+}
+#endif
