@@ -1,4 +1,2 @@
-﻿  Test_7.cpp
-C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_07\Test_7.cpp(46,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_07\Test_7.cpp(52,26): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
+﻿  day012.cpp
   CPPTestMachine.vcxproj -> C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\Debug\CPPTestMachine.exe

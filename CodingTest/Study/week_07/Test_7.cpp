@@ -32,7 +32,7 @@ vector<string> solution(vector<string> strings, int n) {
 // 숫자를 기준으로 각 스테이지 구별 가능할 것 각 스테이지의 첫 시작은 숫자.
 // 아스키코드표 https://stepbystep1.tistory.com/10
 //
-#if 1
+#if 0
 #include <string>
 #include <iostream>
 
