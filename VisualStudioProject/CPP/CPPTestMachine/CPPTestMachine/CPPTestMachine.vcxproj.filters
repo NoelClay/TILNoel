@@ -75,5 +75,14 @@
     <ClCompile Include="day012.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="algo_01_01.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="day013.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="day014.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -142,12 +142,15 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_04\Test_4.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_07\Test_7.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_08\Test_8.cpp" />
+    <ClCompile Include="algo_01_01.cpp" />
     <ClCompile Include="day005.cpp" />
     <ClCompile Include="day006.cpp" />
     <ClCompile Include="day007.cpp" />
     <ClCompile Include="day008.cpp" />
     <ClCompile Include="day009.cpp" />
     <ClCompile Include="day012.cpp" />
+    <ClCompile Include="day013.cpp" />
+    <ClCompile Include="day014.cpp" />
     <ClCompile Include="day018.cpp" />
     <ClCompile Include="day019.cpp" />
     <ClCompile Include="day020.cpp" />
