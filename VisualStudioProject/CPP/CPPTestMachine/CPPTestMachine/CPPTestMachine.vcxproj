@@ -151,15 +151,19 @@
     <ClCompile Include="day012.cpp" />
     <ClCompile Include="day013.cpp" />
     <ClCompile Include="day014.cpp" />
+    <ClCompile Include="day015.cpp" />
+    <ClCompile Include="day016.cpp" />
+    <ClCompile Include="day017.cpp" />
     <ClCompile Include="day018.cpp" />
     <ClCompile Include="day019.cpp" />
     <ClCompile Include="day020.cpp" />
+    <ClCompile Include="day021.cpp" />
     <ClCompile Include="day024.cpp" />
     <ClCompile Include="day025.cpp" />
-    <ClCompile Include="day03.cpp" />
-    <ClCompile Include="day04.cpp" />
-    <ClCompile Include="day10.cpp" />
-    <ClCompile Include="day11.cpp" />
+    <ClCompile Include="day003.cpp" />
+    <ClCompile Include="day004.cpp" />
+    <ClCompile Include="day010.cpp" />
+    <ClCompile Include="day011.cpp" />
     <ClCompile Include="Test_05.cpp" />
     <ClCompile Include="Test_6.cpp" />
   </ItemGroup>

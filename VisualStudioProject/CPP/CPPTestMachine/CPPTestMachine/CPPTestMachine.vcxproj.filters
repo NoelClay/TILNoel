@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="day03.cpp">
+    <ClCompile Include="day003.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="day04.cpp">
+    <ClCompile Include="day004.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_04\Test_4.cpp">
@@ -63,13 +63,13 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_08\Test_8.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="day10.cpp">
+    <ClCompile Include="day010.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="day009.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="day11.cpp">
+    <ClCompile Include="day011.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="day012.cpp">
@@ -82,6 +82,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="day014.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="day015.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="day016.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="day017.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="day021.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
