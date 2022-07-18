@@ -108,5 +108,11 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_10\Test_10.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_02\Test_2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_03\Test_3.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

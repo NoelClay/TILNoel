@@ -1,7 +1,7 @@
 #if 0
 #include <string>
 #include <vector>
-
+#include<iostream>
 
 using namespace std;
 
@@ -13,16 +13,26 @@ string solution(string s, int n) {
     {
         //Upper A:65 Z:90 91-26 = 65 따라서 Upper+n-26 다행히도 n은 1이상 25이하 자연수이다. 
         // 만약 n이 26보다 큰 수라면 n을 먼저 26으로 나눈 나머지로 더하고 -26을 했어야 될거 같다.
-        if (64 < answer[i] < 91)
-            if (answer[i] + n > 90)  answer[i] = answer[i] + n - 26;
-            else    answer[i] = answer[i] + n;
+        if (64 < s[i] && s[i] < 91) {
+            if (s[i] + n > 90) { answer[i] = answer[i] + n - 26; }
+            else { answer[i] += n; }
+        }
+
         //Lower a:97 z:122
-        else
-            if (answer[i] + n > 122)  answer[i] = answer[i] + n - 26;
-            else    answer[i] = answer[i] + n;
+        else if (96 < s[i] && s[i] < 123) {
+            if (s[i] + n > 122) { answer[i] = answer[i] + n - 26; }
+            else { answer[i] += n; }
+        }
+        else {  }
     }
     return answer;
 }
+int main() {
+    string s = "a b z";
+    int n = 4;
+    cout << solution(s, n);
+}
+
 #endif
 
 //1. x보다 1큰수를 선형으로 탐색하면서 비트 다른 지점의 수가 1~2개 차이 날때 반환
@@ -42,6 +52,7 @@ string solution(string s, int n) {
 #if 0
 #include <string>
 #include <vector>
+#include<iostream>
 
 using namespace std;
 
@@ -77,6 +88,12 @@ vector<long long> solution(vector<long long> numbers) {
         }
     }
     return answer;
+}
+int main() {
+    vector<long long> numbers = { 2, 7 };
+    auto answer = solution(numbers);
+    cout << answer[0] << endl;
+    cout << answer[1];
 }
 #endif
 // 1  2  3   4    5   6                         10    11  12                       16     17    18                      22         24       29     30                              36                                    42 

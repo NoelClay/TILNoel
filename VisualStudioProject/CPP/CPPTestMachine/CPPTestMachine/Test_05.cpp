@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ int solution(int left, int right) {
     int start = left;
     bool primeCheck = true;
     //3. 선형탐색
-    for (int i = 0; i <= (left - right); i++)
+    for (int i = 0; i <= (right - left); i++)
     {
         bool primeCheck = true;
         //int cnt = 0;//2.개수 체크
@@ -50,6 +51,12 @@ int solution(int left, int right) {
 
     return answer;
 }
+int main() {
+    int s = 13, n = 17;
+    cout << solution(s, n);
+}
+
+
 #endif
 
 //2번

@@ -6,7 +6,7 @@
 //신고자의 이름으로 접근가능한 배열을 만들고 그 배열엔 피신고자의 이름을 저장하되 중복을 허용하지 않는다.
 //반환시에 각 아이디 순서에 맞게 배열의 길이를 반환한다.
 
-#if 1
+#if 0
 #include <string>
 #include <vector>
 #include <iostream>
@@ -49,19 +49,19 @@ using namespace std;
 vector<int> divisor(int N) {
 
 	vector<int> answer;
-	int index = 0;
+	//int index = 0;
 
-	for (int i = 0; i <= sqrt(N); i++) {
+	for (int i = 1; i <= sqrt(N); i++) {
 		if (N % i == 0) {
 			answer.push_back(i);
-			index++;
+			//index++;
 			if (N / i != i) {
 				answer.push_back(N / i);
-				index++;
+				//index++;
 			}		
 		}	
 	}
-	sort(answer, answer + index);
+	sort(answer.begin(), answer.end());
 
 	return answer;
 }
@@ -77,7 +77,7 @@ vector<int> solution(int brown, int yellow) {
 	rightIndex = yellowdiv.size();
 	for (int i = 0; i <= rightIndex; i++, rightIndex--) {
 		MN.push_back(yellowdiv[i]);
-		MN.push_back(yellowdiv[rightIndex]);
+		MN.push_back(yellowdiv[rightIndex-1]);
 		yellowMN.push_back(MN);
 		MN.clear();
 
@@ -95,6 +95,7 @@ vector<int> solution(int brown, int yellow) {
 		if ((BM * BN - yellowMN[check][0] * yellowMN[check][1]) == brown) {
 			break;
 		}
+		check++;
 	}
 	//divisor 배열은 오름차순이었고 작은거m 큰거n에 저장했으니까 가로길이는 세로보다 같거나 커야하니까 가로먼저 출력해야되니까
 
@@ -107,7 +108,8 @@ vector<int> solution(int brown, int yellow) {
 
 int main()
 {
-	
-	//cout << solution();
+	int brown = 24, yellow = 24;
+	cout << solution(brown, yellow)[0] << endl;
+	cout << solution(brown, yellow)[1] << endl;
 }
 #endif
