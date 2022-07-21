@@ -1,2 +1,6 @@
-﻿  Test_6.cpp
+﻿  Test_11.cpp
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_11\Test_11.cpp(135,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_11\Test_11.cpp(140,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_11\Test_11.cpp(144,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_11\Test_11.cpp(159,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   CPPTestMachine.vcxproj -> C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\Debug\CPPTestMachine.exe
