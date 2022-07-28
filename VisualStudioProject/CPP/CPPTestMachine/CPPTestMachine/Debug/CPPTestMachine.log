@@ -1,14 +1,7 @@
-﻿  Test_8.cpp
-C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_08\Test_8.cpp(231,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_08\Test_8.cpp(243,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_08\Test_8.cpp(277,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_08\Test_8.cpp(292,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_08\Test_8.cpp(313,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(5643,13): error C2064: 항은 1개의 인수를 받아들이는 함수로 계산되지 않습니다.
-C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_08\Test_8.cpp(254): message : 컴파일되는 함수 템플릿 인스턴스화 '_InIt std::find_if<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>>,std::basic_string<char,std::char_traits<char>,std::allocator<char>>>(_InIt,const _InIt,_Pr)'에 대한 참조를 확인하세요.
-          with
-          [
-              _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<std::pair<std::string,int>>>>,
-              _Ty=std::pair<std::string,int>,
-              _Pr=std::string
-          ]
+﻿  Test_12.cpp
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_12\Test_12.cpp(74,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_12\Test_12.cpp(88,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_12\Test_12.cpp(123,27): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_12\Test_12.cpp(140,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\Users\noel\Documents\gittil\TIL\CodingTest\Study\week_12\Test_12.cpp(161,23): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  CPPTestMachine.vcxproj -> C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\Debug\CPPTestMachine.exe

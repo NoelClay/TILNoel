@@ -147,6 +147,7 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_09\Test_9.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_10\Test_10.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_11\Test_11.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_12\Test_12.cpp" />
     <ClCompile Include="algo_01_01.cpp" />
     <ClCompile Include="day005.cpp" />
     <ClCompile Include="day006.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="day011.cpp" />
     <ClCompile Include="Test_05.cpp" />
     <ClCompile Include="Test_6.cpp" />
+    <ClCompile Include="TIC_01.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

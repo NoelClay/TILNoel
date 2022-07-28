@@ -184,7 +184,7 @@ int main() {
 // substr()으로 공백을 기준으로 단어 잘라서 배열에 저장하기
 // https://www.delftstack.com/ko/howto/cpp/cpp-split-string-by-space/
 //
-#if 1
+#if 0
 #include <string>
 #include <vector>
 #include <sstream>
