@@ -175,6 +175,7 @@
     <ClCompile Include="Test_05.cpp" />
     <ClCompile Include="Test_6.cpp" />
     <ClCompile Include="TIC_01.cpp" />
+    <ClCompile Include="TIC_02.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\ThisIsCPP">
+      <UniqueIdentifier>{48041956-53bf-4b24-9f3a-892ec68145f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day003.cpp">
@@ -117,11 +120,14 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_11\Test_11.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="TIC_01.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_12\Test_12.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="TIC_01.cpp">
+      <Filter>소스 파일\ThisIsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="TIC_02.cpp">
+      <Filter>소스 파일\ThisIsCPP</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
