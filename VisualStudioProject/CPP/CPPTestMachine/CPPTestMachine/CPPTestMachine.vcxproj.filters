@@ -16,6 +16,9 @@
     <Filter Include="소스 파일\ThisIsCPP">
       <UniqueIdentifier>{48041956-53bf-4b24-9f3a-892ec68145f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ThisIsCodingTest">
+      <UniqueIdentifier>{cc71fcec-9b0c-4753-b021-a07dad08fe1e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="day003.cpp">
@@ -128,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="TIC_02.cpp">
       <Filter>소스 파일\ThisIsCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch03Greedy.cpp">
+      <Filter>소스 파일\ThisIsCodingTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
