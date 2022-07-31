@@ -184,7 +184,7 @@ int main()
 // 어떤 수를 나눌때 나머지가 남는다는것은 그 나머지를 빼주고 나면 나누어 떨어지는 수가 된다는 뜻이다.
 // N = ak + b 라고 할때 어차피 b번 뺄셈하고 k로 한번 나누면 N은 a가 된다.
 //
-#if 1
+#if 0
 #include<iostream>
 using namespace std;
 
