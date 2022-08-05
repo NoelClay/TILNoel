@@ -81,27 +81,98 @@ int main() {
 #endif
 
 /* <2> 탐색 알고리즘 DFS/BFS
+결국 모든 자료를 탐색하고 싶을때 복잡한 구조로 얽혀있는 모든 자료를 다 탐색하고 싶을때 사용하는 알고리즘이라고 보면 된다.
+
 DFS: Depth First Search, 깊이 우선 탐색, 그래프에서 깊은 부분을 우선적으로 탐색하는 알고리즘
-BFS: B
+1. 탐색 시작 노드를 스택에 삽입하고 방문 처리를 한다.
+2. 스택의 최상단 노드에 방문하지 않은 인접 노드가 있으면 그 인접 노드를 스택에 넣고 방문 처리를 한다. 
+방문하지 않은 인접 노드가 없으면 스택에서 최상단 노드를 꺼낸다.
+3. 2번 과정을 더이상 할 수 없을때까지 반복한다.
+
+결국 방문처리와 인접데이터가 핵심. 인접되어있는지를 체크할 수 있게 노드와 간선의 형태로 자료를 배치하고
+방문처리를 기록하고 올바르게 해석하는 자료구조를 만들어야함.
+
+스택 방식은 방문한 데이터 위에 또 다른 데이터가 쌓이면 그 데이터가 완료될때까지 
+아래 데이터는 사라지지 않는다는 특성은 마치 재귀와 비슷하다.
+재귀 방식은 호출한 함수가 다른 함수를 또 호출하면 마치 스택처럼 그 함수 위에 함수가 쌓여서 맨 위에 함수가 하나씩 
+완료되지 않는 이상 아래 함수의 종료가 일어나지 않는다. 이런 특성은 스택과 재귀가 같은 원리이기 때문에 생기는 현상.
+
 */
 #if 0
 #include<iostream>
 #include<vector>
 using namespace std;
 
-int main() {
+vector<bool> visited(9); //그래서 9개 요소의 방문 여부를 표현할 불벡터
+vector<vector<int>> graph(9);
 
+void dfs(int startIdx) {
+    visited[startIdx] = true; //처음 시작 노드는 방문 처리한다.
+    cout << startIdx << ' '; //방문한 노드를 순서대로 출력할것.
+    for (auto n : graph[startIdx]) { //현재 방문한 노드가 어떤 노드와 인접했는지 정보를 체크할 graph
+        if (!visited[n]) {//만약 인접한 노드에 방문한 적이 없는 상태라면 
+            dfs(n);
+        }
+    }
+}
+int main() {
+    graph = { {},{2,3,8},{1,7},{1,4,5},{3,5},{3,4},{7},{2,6,8},{1,7} }; //9개의 요소
+//위에서 배운 인접 리스트와 다른점은 간선의 가중치가 주어지지 않은 경우이다. 가중치가 있다면 pair와 같은 자료구조가 필요.
+   
+    dfs(1);
+    //c++의 함수로 전달하는 인수 전달받는 매개변수는 복사된 형태를 받는다. 따라서 참조형의 형태일거라고 착각하면 안된다.
+    //참조의 간편화를 위해 전역변수로 하고 실인수로는 지금 접근하려는 노드만 받는다.
 }
 
 #endif
+/* 스택을 이용한 DFS처리
+*/
 
 #if 0
 #include<iostream>
 #include<vector>
+#include<stack>
 using namespace std;
 
-int main() {
+vector<bool> visited(9); //그래서 9개 요소의 방문 여부를 표현할 불벡터
+vector<vector<int>> graph(9);
+stack<int> nodeStack;
 
+void dfs(int startIdx) {
+    visited[startIdx] = true; //처음 시작 노드는 방문 처리한다.
+    cout << startIdx << ' '; //방문한 노드를 순서대로 출력할것.
+    nodeStack.push(startIdx); //현재 방문한 노드!
+    int idx = 0;
+    while(!nodeStack.empty()){ //스택을 다 비우면 탐색끝
+        //현재 방문한 노드가 어떤 노드와 인접했는지 정보를 체크할 graph
+        auto n = graph[nodeStack.top()][idx];
+
+        if (!visited[n]) {//만약 인접한 노드에 방문한 적이 없는 상태라면 
+            //방문해야지. 방문한 노드 되고 방문 노드 처리하고, 출력까지
+            nodeStack.push(n);
+            visited[n] = true;
+            cout << n << ' ';
+            idx = 0;
+        }
+        else if (visited[n]) { //만약 지금 검색하는 노드에서 접근한 인접노드가 방문한 적이 있는 상태라면
+            //다음 인접노드를 탐색할것이다. 그런데 인덱스 탐색에서 인덱스 오버플로가 발생하는걸 막아야함.
+            if (idx < graph[nodeStack.top()].size() - 1) {
+                idx++;
+            }
+            else {
+                nodeStack.pop();
+                //다시 처음부터 탐색할것이므로 또 이래야 오버플로가 안일어남
+                idx = 0;
+            }
+        }
+    }
+}
+
+int main() {
+    graph = { {},{2,3,8},{1,7},{1,4,5},{3,5},{3,4},{7},{2,6,8},{1,7} }; //9개의 요소
+//위에서 배운 인접 리스트와 다른점은 간선의 가중치가 주어지지 않은 경우이다. 가중치가 있다면 pair와 같은 자료구조가 필요.
+
+    dfs(1);
 }
 
 #endif
