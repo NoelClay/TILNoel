@@ -437,8 +437,9 @@ ex ) 북쪽을 바라보면 북쪽으로 이동하기 위해 x,y 좌표에 x += dx[0] , y += dy[0]을
 
 #endif
 
-//
-//
+/*
+
+*/
 #if 0
 #include<iostream>
 #include<vector>
