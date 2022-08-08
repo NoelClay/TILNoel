@@ -1,2 +1,4 @@
 ﻿  Ch05DFSBFS.cpp
+C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\CPPTestMachine\Ch05DFSBFS.cpp(475,17): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
+C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\CPPTestMachine\Ch05DFSBFS.cpp(491,39): warning C4553: '==': 식의 결과가 사용되지 않습니다. '='을(를) 의도했습니까?
   CPPTestMachine.vcxproj -> C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\Debug\CPPTestMachine.exe

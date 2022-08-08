@@ -446,15 +446,16 @@ BFS 문제라는 사전정보가 있었다. 입력예시에 따라 로직은 천차만별일것이므로 무수히
 <상하좌우 중 어디를 선택할지는 어떻게 정할까>
 <visited를 어떻게 구현해야될지 도저히 모르겠다. 그걸 해야... 의미없는 탐색이 줄어들고 무한반복이 일어나지 않을텐데..>
 */
-#if 1
+#if 0
 #include<iostream>
 #include<queue>
 #include<vector>
+#include<map>
 using namespace std;
 
 int n, m;
 vector<vector<int>> graph;
-vector<int> ways;
+vector<vector<int>> ways;
 queue<pair<int,int>> nodeQueue;
 vector<vector<bool>> visited;
 
@@ -464,12 +465,19 @@ int dCol[] = { 0, 0, -1, 1 };
 
 int solution(int Row, int Col) {
     int answer = 0;
+    int turn = 0;
     //현재 탐색위치는 일단 큐에 저장해.
     nodeQueue.push({ 0,0 });
-    visited[0][0] = true;
+    turn++;
+    ways[0][0] = turn;
+    /*visited[0][0] = true;*/
+    //방문했는지 안했는지는 graph를 0으로 바꿔서
+    graph[0][0] == 0;
     while (!nodeQueue.empty()) {
         auto curRow = nodeQueue.front().first;
         auto curCol = nodeQueue.front().second;
+        //큐에 저장된 정보 빼냈으면 실제로도 빼낸다.
+        nodeQueue.pop();
 
         for (int i = 0; i < 4; i++) {
             auto newRow = curRow + dRow[i];
@@ -479,33 +487,43 @@ int solution(int Row, int Col) {
 
             if (graph[newRow][newCol] == 1) {//1이면 큐에 추가할것이야.
                 nodeQueue.push({ newRow, newCol });
+                ways[newRow][newCol] = ways[curRow][curCol] + 1;
+                graph[newRow][newCol] == 0;
+            }
+            if (newRow == n - 1 && newCol == m - 1) {
+                return ways[newRow][newCol];
             }
         }
     }
-
-
     return answer;
 }
 
 int main() {
     cin >> n >> m;
-    vector<int>temp;
-    vector<bool>boolTemp;
-    int t;
-    //for (int i = 0; i < n; i++) {
-    //    for (int j = 0; j < m; j++) {
-    //        cin >> t;
-    //        temp.push_back(t);
-    //    }
-    //    graph.push_back(temp);
-    //    temp.clear();
+    //vector<int>temp;
+    //vector<bool>boolTemp;
+    //int t;
+    ////for (int i = 0; i < n; i++) {
+    ////    for (int j = 0; j < m; j++) {
+    ////        cin >> t;
+    ////        temp.push_back(t);
+    ////    }
+    ////    graph.push_back(temp);
+    ////    temp.clear();
+    ////}
+    //for (int j = 0; j < m; j++) {
+    //    boolTemp.push_back(false);
     //}
-    for (int j = 0; j < m; j++) {
-        boolTemp.push_back(false);
-    }
-    for (int i = 0; i < n; i++) {
-        visited.push_back(boolTemp);        
-    }
+    //for (int i = 0; i < n; i++) {
+    //    visited.push_back(boolTemp);        
+    //}
+    graph = { {1,0,1,0,1,0},{1,1,1,1,1,1},{0,0,0,0,0,1},{1,1,1,1,1,1},{1,1,1,1,1,1} };
+    ways = { {0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0} };
+
     cout << solution(n,m);
 }
 #endif
+/*고찰
+방문을 어떻게 처리할지, 카운트는 어떻게 저장할지 등에서 굉장히 오래 막히었다.
+graph의 요소를 직접 변경하는 방식으로 로직을 생각하는걸 자주 해야겠다.
+*/
