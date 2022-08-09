@@ -25,6 +25,12 @@
     <Filter Include="소스 파일\CodingTestPractice">
       <UniqueIdentifier>{6a9f3702-8d71-4ffc-bfa5-3031129fd6b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\ThisIsCodingTest\BookSorce">
+      <UniqueIdentifier>{3c3092c5-efda-452d-9c01-29a23f72f8af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ThisIsCodingTest\BookSorce\Ch06">
+      <UniqueIdentifier>{bb0b1420-50b3-4975-9fb3-f17fae3b9026}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="algo_01_01.cpp">
@@ -149,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_13\Test_13.cpp">
       <Filter>소스 파일\WeekCodingTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch06Sorting.cpp">
+      <Filter>소스 파일\ThisIsCodingTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
