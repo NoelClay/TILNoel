@@ -152,19 +152,19 @@ using namespace std;
 
 vector<int> arr = { 7,5,9,0,3,1,6,2,4,8 };
 void quickSort( int ln, int rn) {
-	if (ln == rn) {
+	if (ln >= rn) {
 		return;
 	}
 	int lp = ln + 1;
 	int rp = rn;
 	while (true) {
-		for (; lp<rn;lp++) {
+		while (lp<=rn&&arr[lp] <= arr[ln]){
 			//arr[lp]가 피벗보다 큰 경우에 반복 종료
-			if (arr[lp] > arr[ln]) { break; }
+			lp++;
 		}
-		for (; rp > ln; rp--) {
+		while (rp>ln&&arr[rp] >= arr[ln]){
 			 //arr[rp]가 피벗보다 작은 경우에 반복 종료
-			if (arr[rp] < arr[ln]) { break; }
+			rp--;
 		}
 		if (lp > rp) {
 			swap(arr[ln], arr[rp]);
@@ -174,8 +174,8 @@ void quickSort( int ln, int rn) {
 			swap(arr[lp], arr[rp]);
 		}
 	}
-	quickSort( ln, lp-1);
-	quickSort( lp + 1, rn);
+	quickSort( ln, rp-1);
+	quickSort( rp + 1, rn);
 	return;
 }
 int main()
@@ -190,3 +190,75 @@ int main()
 //고찰(실패)
 //인덱스 오류가 계속 나고 중간 중간 교환되지 않는 문제가 발생
 //
+//범위 체크 문제에서 오류가 났다. 디버깅과정을 통해서도 답이 나오지 않았다.
+//책의 내용을 보고나서 같은 논리로 짜도 오류가 반복되었다. 천천히 디버깅을 하면 오류가 날 일이 없는데, 그냥 프로그램을 돌리면
+//범위 초과 오류가 나는 현상이다.
+//for문을 사용하면 적절하지 않은것 같아 while문으로 바꾸어도 여전히 범위 초과 오류가 난다.
+//
+//최종적으로 피벗과 교환하는 인덱스는 right 인덱스이다. 이 right 인덱스는 그래서 start 인덱스보다 절대 작아져서는 안된다.
+//하지만 left인덱스는 다르다. left는 마지막 인덱스보다 커져야 될 때도 있는가? 그렇다. 반드시 커져야 한다. 예를들어
+// 6 7 짜리를 돌때. start=0 end=1 left=1 right=1 이다. 이때 left가 right를 넘어서지 않는다면 종료되지 않는다. 그렇기에 
+//left는 범위를 넘어도 되고 right는 범위를 넘지 말게 설계해야한다.
+
+/*책 6.4 퀵정렬*/
+#if 0
+#include<vector>
+#include<iostream>
+using namespace std;
+
+int n = 10;
+int arr[10] = { 7, 5, 9, 0, 3, 1, 6, 2, 4, 8 };
+
+void quickSort(int* arr, int start, int end) { //포인터 매개변수인 것은 저 이름의 주소를 찾아가서 사용할 거라는 뜻
+	if (start >= end) return; // 원소가 1개인 경우 종료
+	//start가 end보다 커지는 경우가 있을까?
+	//실제로 start == end 하게 되면 무한 재귀를 탈출 할 수 없다. 왜냐하면
+	//분할 이후 재귀를 소환하는건 right-1과 right +1 을 하기 때문.
+	//예를들어 2개짜리 배열에서 피벗은 1인덱스로 가게되어 분할하여 나눠서 호출하게 될경우
+	//quickSort(arr, 0, 1-1); quickSort(arr, 1+1, 1); 이 되는데 이때 오른쪽부분 호출에서 커지게 된다.
+
+	int pivot = start; // 피벗은 첫 번째 원소
+	int left = start + 1;
+	int right = end;
+	//여기까지는 내가 한 것과 동일.
+
+	while (left <= right) {
+		//반복종료 조건도 나와 동일함. left가 right를 지나쳐 넘어설때 종료.
+
+		// 피벗보다 큰 데이터를 찾을 때까지 반복
+		while (left <= end && arr[left] <= arr[pivot]) left++;
+		//여기부터 디테일하게 다르다. 나는 left < end 까지만 반복했고, arr[left] > arr[pivot]이면 종료하는 조건은 같다.
+		//왜 end와 같은 인덱스까지 반복을 진행했을까? 마지막 원소도 비교의 대상이기 때문이다. 내가 마지막 원소를 비교하지 않은건
+		//범위 오버플로를 인식한 대처였지만 논리오류의 원인이었다. 실제 left는 end 이상을 넘어서 증가하지 않게 된다.
+
+		// 피벗보다 작은 데이터를 찾을 때까지 반복
+		while (right > start && arr[right] >= arr[pivot]) right--;
+
+		// 엇갈렸다면 작은 데이터와 피벗을 교체
+		if (left > right) swap(arr[pivot], arr[right]);
+		// 엇갈리지 않았다면 작은 데이터와 큰 데이터를 교체
+		else swap(arr[left], arr[right]);
+		//여기까지도 오류가 없다.
+	}
+	// 분할 이후 왼쪽 부분과 오른쪽 부분에서 각각 정렬 수행
+	quickSort(arr, start, right - 1);
+	quickSort(arr, right + 1, end);
+	//여기서 나는 right가 아닌 left로 피벗을 보냈다고 착각해서 구현에 실수가 있었다.
+
+	//여기까지 논리는 다 같은데 이상하게 범위 오버플로우 오류가 발생한다.
+}
+
+int main(void) {
+	quickSort(arr, 0, n - 1); //정렬하고자하는 배열, 첫번째 인덱스, 마지막 인덱스
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << ' ';
+	}
+}
+#endif
+
+/*계수 정렬
+원리는 간단하다. 정수데이터의 배열이 있을때 0~ 최대값으로 범위가 정해져 있다면, 최대값+1개의 요소를 갖는 검사리스트를 생성하고
+주어진 배열을 0인덱스부터 길이까지 탐색하면서 각각 들어있는 값을 검사리스트의 인덱스로 사용하여 카운트를 '계수'한다.
+그래서 카운트 정렬 계수 정렬 이다.
+주어진 배열을 선형탐색하는 N 
+*/
