@@ -260,5 +260,449 @@ int main(void) {
 원리는 간단하다. 정수데이터의 배열이 있을때 0~ 최대값으로 범위가 정해져 있다면, 최대값+1개의 요소를 갖는 검사리스트를 생성하고
 주어진 배열을 0인덱스부터 길이까지 탐색하면서 각각 들어있는 값을 검사리스트의 인덱스로 사용하여 카운트를 '계수'한다.
 그래서 카운트 정렬 계수 정렬 이다.
-주어진 배열을 선형탐색하는 N 
+주어진 배열을 선형탐색하는 N, 범위만큼 요소의 개수가 있는 계수리스트 선형탐색 K번 탐색하면서 각 인덱스의 요소값이 인덱스 갯수가 되어 출력
+
+하지만 공간복잡도에서만큼은 자유로울순 없는 것은 계수리스트 자체가 필요하기 때문이다.
+그리고, 정수 자료형에만 적용이 가능하며, 최대값과 최소값의 간극이 클 수록 그런데 요소의 개수는 적을 수록 비효율적으로 퇴색된다.
+왜냐하면 n+k 만큼의 시간복잡도를 갖는데, n제곱보다 오히려 더 커질 수 도 있기 때문이다.
 */
+#if 0
+#include<vector>
+#include<iostream>
+using namespace std;
+auto countSort(vector<int> arr) {
+	cout << "0~최대값의 배열을 정렬하는 계수 정렬" << endl;
+	cout << "최대값을 입력하세요." << endl;
+	int k = 0;
+	cin >> k;
+	vector<int> array(k + 1);
+	vector<int> result;
+	for (auto n : arr) {
+		array[n]++;
+	}
+	for (int i = 0; i < k + 1; i++) {
+		if (array[i] != 0) {
+			for (int j = 0; j < array[i]; j++) {
+				result.push_back(i);
+			}
+		}
+	}
+	return result;
+}
+
+int main() {
+	vector<int> arr = { 7, 5, 9, 0, 3, 1, 6, 2, 9, 1, 4, 8, 0, 5, 2 };
+	auto arr2 = countSort(arr);
+	for (int i = 0; i < arr.size(); i++) {
+		cout << arr[i] << ' ';
+	}
+	cout << endl;
+	for (int i = 0; i < arr2.size(); i++) {
+		cout << arr2[i] << ' ';
+	}
+}
+#endif
+/*C++의 sort는 알고리즘 라이브러리에 있다.
+*/
+#if 0
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+int n = 10;
+int arr[10] = { 7, 5, 9, 0, 3, 1, 6, 2, 4, 8 };
+
+int main(void) {
+	sort(arr, arr + n);
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << ' ';
+	}
+}
+#endif
+/*코딩 테스트에서 정렬 알고리즘이 사용되는 경우
+1. 정렬 라이브러리를 사용해서 푸는 문제
+2. 정렬 알고리즘의 원리에 대해 물어보는 문제
+3. 더 빠른 정렬이 필요한 문제*/
+
+/*<2> 위에서 아래로
+하나의 수열에는 다양한 수가 존재한다. 이러한 수는 크기에 상관없이 나열되어 있다. 이 수를 큰 수 부터 작은 수의 순서로
+정렬해야 한다. 수열을 내림차순으로 정렬하는 프로그램을 만드시오.
+입력조건: 첫째줄에 수열에 속해 있는 수의 개수 N이 주어진다. 500이하
+둘째 줄에 N+1번째 줄까지 N개의 수가 입력된다. 수의 범위는 십만이하의 자연수이다.
+출력조건: 수열이 내림차순으로 정렬된 결과를 공백으로 출력. 동일한 수의 순서는 자유롭게 출력
+입력예시
+3
+15
+27
+12
+출력예시
+27 15 12
+
+<접근방법>
+오름차순의 대소 비교조건을 반대로 한다. 1.선택정렬 2.삽입정렬 3.퀵정렬 4.알고리즘 라이브러리
+*/
+
+//1.선택정렬
+// 일정한 속도로 반복, 정렬되지 않은 부분과 정렬된 부분으로 구별되고 각자 하나씩 증가감소 
+// 최대값을 찾아서 하나씩 교환해 넣으면 해결
+#if 0
+#include<iostream>
+#include<vector>
+using namespace std;
+
+auto selectSort(vector<int> arr) {
+	vector<int> answer = arr;
+	int maxIdx;
+	for (int i = 0; i < arr.size(); i++) { //저장할 인덱스 하나씩 증가
+		maxIdx = i;
+		for (int j = i + 1; j < arr.size(); j++) {
+			if (answer[j] > answer[maxIdx]) {
+				maxIdx = j;
+			}
+		}//내부 반복문이 돌고나면 i인덱스에 저장할 maxidx를 교환한다.
+		swap(answer[i], answer[maxIdx]);
+	}
+	return answer;
+}
+
+int main() {
+	int N;
+	cout << "요소 개수" << endl;
+	cin >> N;
+	cout << "차례대로 숫자 입력" << endl;
+	vector<int> arr(N);
+	for (auto &n : arr) {
+		cin >> n;
+	}
+	auto result = selectSort(arr);
+
+	for (auto n : result) {
+		cout << n << ' ';
+	}
+
+}
+#endif
+//고찰
+//메인함수에서 정의한 배열을 함수로 인자로 보낼때 참조형이 아닌 복사형으로 가져가기때문에 생기는 현상을 어떻게 참조형으로
+//바꿔야할지는 몰라서 추가로 리스트를 만들어서 반환하고 받음.
+//벡터 자료형을 안쓰면 동적으로 배열을 선언하는 방법을 아직 잘 모르겠음.
+
+//2. 삽입정렬
+//선택정렬과 비슷한점은 정렬된 부분과 정렬되지 않은 부분이 나뉜다는 점.
+//처음 시작할때 맨 왼쪽 인덱스는 정렬되어 있는것으로 간주 따라서 1부터 시작한다. 1의 밸류가 0의 밸류보다 작은지 큰지를 비교하여
+//작다면 swap 작지 않다면 거기서 종료 왜? 정렬되어있는 부분에서 이미 정렬되어 속하게 되어짐.
+//이 로직대로 내림차순으로 바꿈.
+#if 0
+#include<iostream>
+#include<vector>
+using namespace std;
+
+auto insertSort(vector<int> arr) {
+	vector<int> answer =arr;
+	for (int i = 1; i < arr.size(); i++) {
+		for (int j = i; j > 0; j--) {
+			if (answer[j] > answer[j - 1]) {
+				swap(answer[j], answer[j - 1]);
+			}
+			else {
+				break;
+			}
+		}
+	}
+	return answer;
+}
+
+int main() {
+	int N;
+	cout << "요소 개수" << endl;
+	cin >> N;
+	cout << "차례대로 숫자 입력" << endl;
+	vector<int> arr(N);
+	for (auto& n : arr) {
+		cin >> n;
+	}
+	auto result = insertSort(arr);
+
+	for (auto n : result) {
+		cout << n << ' ';
+	}
+}
+#endif
+
+//3. 퀵정렬
+//첫번째 요소를 피벗으로 정하고 왼쪽인덱스는 피벗값보다 큰 요소를 찾을때까지 증가하고 오른쪽인덱스는 피벗값보다 작은 요소를 
+//찾을때까지 감소하면서 그렇게 반복이 끝나면 왼쪽 인덱스와 오른쪽인덱스를 비교. 이때 왼쪽이 오른쪽보다 커졌으면 피벗보다 작은 요소인
+//오른쪽값을 피벗값과 교환하고, 오른쪽 인덱스를 기준으로 왼쪽 오른쪽 재귀를 호출한다.
+//이때 교환하는 오른쪽값은 인덱스 초과가 일어나면 안되고, 왼쪽 인덱스는 오른쪽보다 커져야되는게 종료 조건이므로 인덱스범위초과허용
+//이걸 내림차순으로
+#if 0
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int N;
+vector<int> answer;
+vector<int> arr;
+
+void quickSort(int start, int end) {
+	if (start >= end) {
+		return;
+	}
+
+	int left = start + 1;
+	int right = end;
+	int pivot = start;
+
+	while (left <= right) {
+		while (left <= end &&arr[left] >= arr[pivot]) { 
+			//내림차순으로 정렬해야하기에 왼쪽엔 큰값이 와야됨. 따라서 작을때까지 반복
+			//그래서 왼쪽값과 피벗값을 비교해서 왼쪽값이 더 크다면 그냥 지나쳐간다. 왜냐하면 작은값을 오른쪽으로 넘겨야되서
+			left++;
+		}
+		while (right > start &&arr[right] <= arr[pivot]) {
+			//그런데 반복조건이 마냥 값비교만 하면 되는건 아니다. 무한반복과 오버플로우를
+			//방지하기 위해 추가 종료조건을 넣어줘야된다. 바로 인덱스 범위 체크이다. 그런데 교환하는건 피벗보다 큰값을
+			//가리키는 right와 바꿀것이기때문에 right 인덱스의 범위를 1개 더 줄이는걸로 제약.
+			right--;
+		}
+		if (left > right) {
+			swap(arr[pivot], arr[right]);
+		}
+		else {
+			swap(arr[left], arr[right]);
+		}
+	}
+	quickSort( start, right - 1);
+	quickSort( right + 1, end);
+
+	return;
+}
+
+int main() {
+	cout << "요소 개수" << endl;
+	cin >> N;
+	cout << "차례대로 숫자 입력" << endl;
+	vector<int>temp(N);
+	arr = temp;
+	for (auto& n : arr) {
+		cin >> n;
+	}
+    quickSort( 0, N-1);
+
+	for (auto n : arr) {
+		cout << n << ' ';
+	}
+}
+#endif
+/*고찰
+left++ right--에서 햇갈림
+*/
+
+//4. 알고리즘 라이브러리
+// 알고리즘 라이브러리에 sort함수 사용, 여기에 컴패어 함수를 정의해서 커스터마이징 할 수 있다.
+#if 0
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+int N;
+vector<int> answer;
+vector<int> arr;
+
+//내림차순을 위한 컴패어 함수
+bool comp(int a, int b) {
+	return a > b;
+}
+
+int main() {
+	cout << "요소 개수" << endl;
+	cin >> N;
+	cout << "차례대로 숫자 입력" << endl;
+	vector<int>temp(N);
+	arr = temp;
+	for (auto& n : arr) {
+		cin >> n;
+	}
+	sort(arr.begin(), arr.end(), comp);
+
+	for (auto n : arr) {
+		cout << n << ' ';
+	}
+}
+#endif
+
+/*<3> 성적이 낮은 순서로 학생 출력하기
+N명의 학생 정보가 있다. 학생 정보는 학생의 이름과 학생의 성적으로 구분된다. 
+각 학생의 이름과 성적 정보가 주어졌을 때 성적이 낮은 순서대로 학생의 이름을 출력하는 프로그램을 작성하시오.
+입력조건
+첫째 줄에 학생의 수 N이 입력된다. 십만이하
+둘쨀 N+1째 줄까지 학생의 이름을 나타내는 문자열 A와 학생의 성적을 나타내는 정수 B가 공백으로 구분되어 입력된다.
+문자열 A의 길이와 학생의 성적은 100이하의 자연수이다.
+출력조건
+성적이 낮은 순서대로 출력한다. 성적이 동일한 학생들의 순서는 자유롭게 출력
+
+<접근방법>
+이름과 점수의 관계성을 연결시켜 놓는게 필요하다. pair 자료형 map 자료형 등이 있는데 여기서는 pair면 충분할듯
+그렇게해서 1.선택정렬 2.삽입정렬 3.퀵정렬 4.sort라이브러리
+*/
+//1.선택정렬
+#if 0
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+
+auto selectSort(vector<pair<string, int>> &(stScore)) { //참조형 매개변수의 선언방법
+	for (int i = 0; i < stScore.size(); i++) {
+		int min = INT_MAX;
+		int minIdx = 0;
+		for (int j = i; j < stScore.size(); j++) {
+			if (stScore[j].second < min) {
+				min = stScore[j].second;
+				minIdx = j;
+			}
+		}
+		swap(stScore[i], stScore[minIdx]);
+	}
+
+	return;
+}
+
+int main() {
+	int N;
+	cout << "원소의 개수 N을 입력하라: ";
+	cin >> N;
+	vector<pair<string, int>> stScore(N);
+	cout << "학생 이름과 점수를 공백으로 구별하여 입력하고 각 원소는 엔터로 구별한다." << endl;
+	string tString;
+	int tScore;
+	for (int i = 0; i < stScore.size(); i++) {
+		cin >> tString;		cin >> tScore;
+		stScore[i].first = tString;
+		stScore[i].second = tScore;
+	}
+	for (int i = 0; i < stScore.size(); i++) {
+		cout << stScore[i].first << ' ';
+	}
+	cout << endl;
+	selectSort(stScore);
+	for (int i = 0; i < stScore.size(); i++) {
+		cout << stScore[i].first << ' ';
+	}
+	cout << endl;
+
+}
+#endif
+
+//2. 삽입정렬
+#if 0
+#include<iostream>
+#include<vector>
+using namespace std;
+
+void insertSort(vector<pair<string, int>>(&stScore)) {
+	int left = 0;
+	int right = stScore.size() - 1;
+	for (int i = 1; i < stScore.size(); i++) {
+		for (int j = i; j > 0; j--) {//어차피 탐색인덱스인 j는 --할것이다.
+			if (stScore[j].second > stScore[j - 1].second) { 
+				//만약 정렬된부분을 탐색하다 자기보다 작은 녀석을 만나면 종료
+				break;
+			}
+			else {
+				swap(stScore[j], stScore[j - 1]);
+			}
+		}
+	}
+}
+
+int main() {
+	int N;
+	cout << "원소의 개수 N을 입력하라: ";
+	cin >> N;
+	vector<pair<string, int>> stScore(N);
+	cout << "학생 이름과 점수를 공백으로 구별하여 입력하고 각 원소는 엔터로 구별한다." << endl;
+	string tString;
+	int tScore;
+	for (int i = 0; i < stScore.size(); i++) {
+		cin >> tString;		cin >> tScore;
+		stScore[i].first = tString;
+		stScore[i].second = tScore;
+}
+	for (int i = 0; i < stScore.size(); i++) {
+		cout << stScore[i].first << ' ';
+	}
+	cout << endl;
+	insertSort(stScore);
+	for (int i = 0; i < stScore.size(); i++) {
+		cout << stScore[i].first << ' ';
+	}
+	cout << endl;
+}
+#endif
+//3. 퀵정렬
+#if 0
+#include<iostream>
+#include<vector>
+using namespace std;
+void quickSort(vector<pair<string, int>> (&stScore), int start, int end) {
+	//만약 left가 더 커진채로 들어오는게 있다면 걸러야겠지
+	if (start >= end) {
+		return;
+	}
+	int pivot = start;
+	int left = start + 1;
+	int right = end;
+	while (left <= right) {
+		while (left <= end && stScore[pivot].second >= stScore[left].second) {
+			left++;
+		}
+		while (right > start && stScore[pivot].second <= stScore[right].second) {
+			right--;
+		}
+		if (left > right) {
+			swap(stScore[pivot], stScore[right]);
+			break;
+		}
+		else {
+			swap(stScore[left], stScore[right]);
+		}
+	}
+	quickSort(stScore, start, right - 1);
+	quickSort(stScore, right + 1, end);
+}
+
+int main() {
+	int N;
+	cout << "원소의 개수 N을 입력하라: ";
+	cin >> N;
+	vector<pair<string, int>> stScore(N);
+	cout << "학생 이름과 점수를 공백으로 구별하여 입력하고 각 원소는 엔터로 구별한다." << endl;
+	string tString;
+	int tScore;
+	for (int i = 0; i < stScore.size(); i++) {
+		cin >> tString;		cin >> tScore;
+		stScore[i].first = tString;
+		stScore[i].second = tScore;
+}
+	for (int i = 0; i < stScore.size(); i++) {
+		cout << stScore[i].first << ' ';
+	}
+	cout << endl;
+	quickSort(stScore, 0 , N-1);
+	for (int i = 0; i < stScore.size(); i++) {
+		cout << stScore[i].first << ' ';
+	}
+	cout << endl;
+}
+#endif
+//4. sort라이브러리
+#if 0
+#include<iostream>
+#include<vector>
+using namespace std;
+int main() {
+
+}
+#endif

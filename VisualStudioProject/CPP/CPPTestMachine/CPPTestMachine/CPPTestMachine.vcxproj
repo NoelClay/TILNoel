@@ -149,6 +149,7 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_11\Test_11.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_12\Test_12.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_13\Test_13.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_14\Test_14.cpp" />
     <ClCompile Include="algo_01_01.cpp" />
     <ClCompile Include="Ch03Greedy.cpp" />
     <ClCompile Include="Ch04Implementcpp.cpp" />

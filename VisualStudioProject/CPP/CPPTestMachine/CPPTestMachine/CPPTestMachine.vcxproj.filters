@@ -159,5 +159,8 @@
     <ClCompile Include="Ch06Sorting.cpp">
       <Filter>소스 파일\ThisIsCodingTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_14\Test_14.cpp">
+      <Filter>소스 파일\WeekCodingTest</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
