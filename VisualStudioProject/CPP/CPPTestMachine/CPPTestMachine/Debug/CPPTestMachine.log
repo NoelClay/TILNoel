@@ -1,5 +1,2 @@
-﻿  Ch06Sorting.cpp
-C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\CPPTestMachine\Ch06Sorting.cpp(684,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\CPPTestMachine\Ch06Sorting.cpp(689,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\CPPTestMachine\Ch06Sorting.cpp(694,20): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
-  CPPTestMachine.vcxproj -> C:\Users\noel\Documents\gittil\TIL\VisualStudioProject\CPP\CPPTestMachine\Debug\CPPTestMachine.exe
+﻿  Ch07BinarySearch.cpp
+  CPPTestMachine.vcxproj -> C:\Users\noel\Documents\GitHub\TILNoel\VisualStudioProject\CPP\CPPTestMachine\Debug\CPPTestMachine.exe
