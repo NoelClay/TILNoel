@@ -382,7 +382,7 @@ set은 그 자체로 이미 이진탐색 트리를 구성한다. 키값과 밸류값을 자체적으로 가지면
 최소 길이 M은 answer가 마지막 인덱스 요소값이면 될 거니까. 0<=answer<=마지막요소값 범위를 2분탐색하면 되지 않을까?
 마지막 요소 최대값은 해봐야 int 최대값일 텐데 그거를 이분탐색하면 logN의 시간이 소요되는데 이는 계산하면 작은 값이 나올거라 예상한다.
 */
-#if 1
+#if 0
 #include<iostream>
 #include<vector>
 #include<algorithm>
@@ -390,15 +390,26 @@ using namespace std;
 
 int solution(vector<int> arr, int N, int M) {
 	sort(arr.begin(), arr.end());
-	//탑다운 말고 바텀업 방식으로 한번 생각해보자.
+	//탑다운 말고 바텀업 방식으로 한번 생각해보자. 재귀호출을 사용 안했으므로 바텀업 방식 맞다.
 	int answer = 0;
 	int max = arr[N - 1];
 	int min = 0;
-	int mid = (max + min) / 2;
-	while (answer == 0) { //일단 반복할거야
-		mid = (max + min) / 2;
-		if(mid == M) answer
+	int mid =0;
+	int tempSum = 0;
+	while (min <= max) { //일단 반복할거야 -> 그냥 반복한다는 생각은 딱 M개로 떨어지지 않을 경우를 고려하지 못함.
+						//계속 진행하다가 min이 max를 넘어가는 순간 종료하면 답이 떨어진다. 그리고 이게 이진탐색맞다.
+		mid = (max + min) / 2;//일단 미드길이일때 M을 충족하는지 확인
+		tempSum = 0; //항상 반복이 돌기 전에 초기화
+		for (auto n : arr) {
+			int temp = n - mid;
+			if (temp > 0) tempSum += temp;
+		}
+		answer = mid;
+		if (tempSum == M) break;
+		else if (M < tempSum) min = mid+1; //이래야 min이 max를 넘어섬. 논리상으로도 문제 없
+		else if (M > tempSum) max = mid-1; //이래야 max가 min보다 작아짐. 논리 맞음
 	}
+	return answer;
 }
 int main() {
 	int N = 0, M = 0;
@@ -412,5 +423,11 @@ int main() {
 	auto result = solution(arr, N, M);
 	cout << result;
 }
-
+/*고찰(책까지 보고)
+책과 나의 풀이의 논리가 동일하다.
+문제해석
+전형적인 이진탐색 문제이자, 파라메트릭 서치 유형의 문제이다. 파라메트릭 서치 문제는 최적화문제를 결정문제로 푸는 방식을 말한다.
+~조건을 만족하는 가장 최대값을 찾아라 와 같은 최적화 문제를 yes or no 로 결정하는 답변에 따라 범위를 좁혀나가며 최적해를 찾는다.
+그때 사용하는 탐색이 바로 이진탐색이다. 떡의 길이가 1억인 시점부터 2진탐색을 떠올려야 한다.
+*/
 #endif

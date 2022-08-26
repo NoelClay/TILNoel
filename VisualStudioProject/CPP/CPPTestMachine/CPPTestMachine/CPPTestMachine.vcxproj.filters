@@ -22,14 +22,14 @@
     <Filter Include="소스 파일\WeekCodingTest">
       <UniqueIdentifier>{87678b8f-3314-4be5-ac09-4b3f7808e6b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\CodingTestPractice">
-      <UniqueIdentifier>{6a9f3702-8d71-4ffc-bfa5-3031129fd6b4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\ThisIsCodingTest\BookSorce">
       <UniqueIdentifier>{3c3092c5-efda-452d-9c01-29a23f72f8af}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\ThisIsCodingTest\BookSorce\Ch06">
       <UniqueIdentifier>{bb0b1420-50b3-4975-9fb3-f17fae3b9026}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\ThisIsCodingTest\CodingTestPractice">
+      <UniqueIdentifier>{6a9f3702-8d71-4ffc-bfa5-3031129fd6b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -85,73 +85,73 @@
       <Filter>소스 파일\WeekCodingTest</Filter>
     </ClCompile>
     <ClCompile Include="day003.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day004.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day005.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day006.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day007.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day008.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day009.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day010.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day011.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day012.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day013.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day014.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day015.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day016.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day017.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day018.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day019.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day020.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day021.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day022.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day023.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day024.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="day025.cpp">
-      <Filter>소스 파일\CodingTestPractice</Filter>
+      <Filter>소스 파일\ThisIsCodingTest\CodingTestPractice</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_13\Test_13.cpp">
       <Filter>소스 파일\WeekCodingTest</Filter>
@@ -164,6 +164,12 @@
     </ClCompile>
     <ClCompile Include="Ch07BinarySearch.cpp">
       <Filter>소스 파일\ThisIsCodingTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Ch08DynamicProgramming.cpp">
+      <Filter>소스 파일\ThisIsCodingTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_15\Test_15.cpp">
+      <Filter>소스 파일\WeekCodingTest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
