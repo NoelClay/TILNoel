@@ -150,11 +150,14 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_12\Test_12.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_13\Test_13.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_14\Test_14.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_15\Test_15.cpp" />
     <ClCompile Include="algo_01_01.cpp" />
     <ClCompile Include="Ch03Greedy.cpp" />
     <ClCompile Include="Ch04Implementcpp.cpp" />
     <ClCompile Include="Ch05DFSBFS.cpp" />
     <ClCompile Include="Ch06Sorting.cpp" />
+    <ClCompile Include="Ch07BinarySearch.cpp" />
+    <ClCompile Include="Ch08DynamicProgramming.cpp" />
     <ClCompile Include="day005.cpp" />
     <ClCompile Include="day006.cpp" />
     <ClCompile Include="day007.cpp" />

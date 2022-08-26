@@ -706,3 +706,94 @@ int main() {
 
 }
 #endif
+
+/* <4> 두 배열의 원소 교체
+동빈이는 두 개의 배열 A와 B를 가지고 있다. 두 배열은 N개의 원소로 구성되어 있으며, 배열의 원소는
+모두 자연수이다. 동빈이는 최대 K번의 바꿔치기 연산을 수행할 수 있는데, 바꿔치기 연산이란
+배열 A에 있는 원소 하나와 배열 B에 있는 원소 하나를 골라서 두 원소를 서로 바꾸는 것을 말한다.
+동빈이의 최종 목표는 배열 A의 모든 원소의 합이 최대가 되도록 하는 것이며, 여러분은 동빈이를
+도와야 한다.
+N, K, 그리고 배열 A와 B의 정보가 주어졌을 때, 최대 K번의 바꿔치기 연산을 수행하여 만들 수 있는
+배열 A의 모든 원소의 합의 최댓값을 출력하는 프로그램을 작성하시오.
+예를 들어 N = 5, K = 3 이고 배열 A와 B가 다음과 같다고 하자.
+배열 A = 1, 2, 5, 4, 3
+배열 B = 5, 5, 6, 6, 5
+
+세번의 연산 이후 배열의 상태는 
+배열 A = 6, 6, 5, 4, 5
+배열 B = 3, 5, 1, 2, 5
+
+입력조건
+첫 번째 줄에 N, K가 공백으로 구분되어 입력된다. N은 10만 이하, K는 N이하
+두 번째 줄에 배열 A의 원소가 공백으로 구분되어 입력된다. 모든 원소는 int형 범위를 초과하지 않는다.
+세 번째 줄에 배열 B의 원소가 공백으로 구분되어 입력된다.
+출력조건
+배열 A의 원소합을 출력한다.
+
+입력예시
+5 3
+1 2 5 4 3
+5 5 6 6 5
+출력예시
+26
+
+<접근방법>
+결국 배열 A의 최소값과 배열 b의 최대값으로 재할당하고 그냥 원소합을 반환만 하면 됨.
+*/
+#if 0
+#include<algorithm>
+#include<iostream>
+#include<vector>
+using namespace std;
+
+bool cmp(int a, int b) {
+	return a > b;
+}
+
+int solution(vector<int>(&arrA), vector<int>(&arrB), int K) {
+	int answer = 0;
+
+	sort(arrA.begin(), arrA.end());
+	sort(arrB.begin(), arrB.end(), cmp);
+
+	for (int i = 0; i < K; i++) {
+		arrA[i] = arrB[i];
+	}
+
+	for (auto n : arrA) {
+		answer += n;
+	}
+	return answer;
+}
+
+int main()
+{
+	cout << "입력할 원소의 개수 N: ";
+	int N;
+	cin >> N;
+	cout << "수행할 교환 횟수 K (단 N개 이하여야 한다) K: ";
+	int K;
+	cin >> K;
+	
+	vector<int> arrA(N);
+	cout << "배열 A의 원소를 공백으로 구분하여 N개만큼 입력" << endl;
+	for (int i = 0; i < N; i++) {
+		cin >> arrA[i];
+	}
+	cout << endl;
+
+	vector<int> arrB(N);
+	cout << "배열 B의 원소를 공백으로 구분하여 N개만큼 입력" << endl;
+	for (int i = 0; i < N; i++) {
+		cin >> arrB[i];
+	}
+	cout << endl;
+
+	auto result = solution(arrA, arrB, K);
+	cout << "결과는 : " << result;
+}
+
+#endif
+/*책 풀이 확인
+별거 없다.
+*/
