@@ -158,6 +158,7 @@
     <ClCompile Include="Ch06Sorting.cpp" />
     <ClCompile Include="Ch07BinarySearch.cpp" />
     <ClCompile Include="Ch08DynamicProgramming.cpp" />
+    <ClCompile Include="Ch09ShortestPath.cpp" />
     <ClCompile Include="day005.cpp" />
     <ClCompile Include="day006.cpp" />
     <ClCompile Include="day007.cpp" />
