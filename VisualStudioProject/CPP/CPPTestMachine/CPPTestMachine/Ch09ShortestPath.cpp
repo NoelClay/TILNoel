@@ -285,7 +285,7 @@ C++에서는 기본적으로 최대힙으로 구현되어 있기 때문에 최소힙을 이용하는 아주 간단
 */
 
 //직접 구현해보기 개선된 다익스트라 알고리즘
-#if 1
+#if 0
 #include<vector>
 #include<queue>
 #include<iostream>
@@ -299,7 +299,23 @@ void dijkstra(vector<int> (&dp), vector<bool>(&visited), vector<vector<pair<int,
 	//start정보를 기준으로 초기화 세팅
 	dp[start] = 0;
 	visited[start] = true;
-	for(auto n)
+	for (int i = 0; i < graph[start].size(); i++) {
+		dp[graph[start][i].first] = graph[start][i].second;
+		pq.push({ graph[start][i].second * -1, graph[start][i].first }); //가중치, 노드값으로 초기화
+	}
+	while (!pq.empty()) {
+		//pq에서 가장 짧은 놈으로 한번 방문해보자.
+		start = pq.top().second;	//현재 방문할 노드
+		int confirmed = pq.top().first * -1; //방문할 노드의 확정된 최소 경로거리
+		pq.pop();
+		visited[start] = true;
+		for (int i = 0; i < graph[start].size(); i++) {
+			if (dp[graph[start][i].first] > confirmed + graph[start][i].second) {
+				dp[graph[start][i].first] = confirmed + graph[start][i].second;
+				pq.push({ (confirmed + graph[start][i].second) * -1, graph[start][i].first });
+			}
+		}
+	}
 }
 
 int main() {
@@ -328,3 +344,335 @@ int main() {
 	}
 }
 #endif // 1
+
+/*<플로이드 워셜 알고리즘>
+다익스트라는 한 지점에서 다른 목적지까지의 최단 경로를 구해야 하는 경우에 사용할 수 있는 최단 경로 알고리즘
+플로이드는 모든 지점에서 모든 지점까지의 최단 경로를 구해야 하는 경우에 사용하는 알고리즘
+소스코드는 오히려 간단해서 다익스트라보다 구현이 더 쉽다. 하지만 그 본질을 이해하는게 여기서는 중요.
+
+다익스트라는 현재 방문한 노드를 최소 경로거리라고 확정을 하고 탐색하기를 노드의 개수만큼 반복한다.
+플로이드 워셜은 거쳐가는 노드를 기준으로 생각하여 최소 거리값을 갱신하기를 반복하는데 모든 노드가 다른 모든 노드까지 가는 비용을
+다 갱신하다보니 2차원배열이 사용되며 그만큼 N제곱번을 N번 탐색하므로 N세제곱이란 시간복잡도가 나온다.
+
+다익스트라는 dp테이블도 사용하지만 기본적으로 일단 가장 원하는 작은 값으로 계속 갱신한다는 점은 그리디 알고리즘이라고 할 수 있다.
+하지만 플로이드 워셜은 철저하게 다이나믹 프로그래밍이다. 점화식을 따라 구현되기 때문이다.
+k노드를 거쳐가는 경우의 수를 탐색중일때, f(a->b) = min(f(a->k)+f(k->b), f(a->b))
+
+
+*/
+
+//직접 구현해보는 플로이드 워셜 알고리즘
+#if 0
+#include<iostream>
+#include<vector>
+#define INF 1e8
+using namespace std;
+int N, M; //노드의 개수와 간선의 개수
+
+void FloydWarshall(vector<vector<pair<int, int>>> graph, vector<vector<int>> (&dp)) {
+	//초기화 작업 : 각 그래프 탐색하면서 갈 수 있는 곳은 다 할당하고 자기 자신은 0으로 만들고
+	for (int i = 1; i < N + 1; i++) {
+		dp[i][i] = 0;
+		for (auto n : graph[i]) {
+			dp[i][n.first] = n.second;
+		}
+	}
+	//반복하면서 해야될 것. dp테이블 최소값으로 갱신작업, 1번 노드를 거쳐가는 경우에는 1번을 제외한 녀석들이
+	//각자 도생의 방법으로 갈수 있는 경우에 dp테이블 최소값을 비교하며 저장
+	for (int i = 1; i < N + 1; i++) { //i는 지금 선택된 노드 거쳐가는 경우
+		for (int j = 1; j < N + 1; j++) { //j와 k는 i를 제외한 모든 노드의 경우를 탐색하기 위해서 
+			if (j == i) {//i는 거쳐가는 경우이지 스타트도 도달도 되어선 안된다.
+				continue;
+			}
+			for (int k = 1; k < N + 1; k++) { //j는 스타트 노드이고 k는 도달 노드일것이다.
+				if (k == i || j==k) {//j와 k가 같은 경우도 따져볼 필요가 없다. 그냥 0이다.
+					continue;
+				}
+				dp[j][k] = min(dp[j][k], dp[j][i] + dp[i][k]);
+			}
+		}
+	}
+}
+
+int main() {
+	cout << "노드의 개수와 간선의 개수를 공백을 기준으로 구별하여 입력" << endl;
+	cin >> N >> M;
+	vector<vector<pair<int, int>>> graph(N + 1);
+	vector<int> temp(N + 1, INF);
+	vector<vector<int>> dp(N + 1, temp);
+	cout << "출발 노드, 도착 노드, 간선의 가중치 공백을 기준으로 구별하여 입력하기를 엔터로 구별하여 총 간선의 개수만큼 반복" << endl;
+	for (int i = 0; i < M; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		graph[a].push_back({ b,c });
+	}
+	FloydWarshall(graph, dp);
+	cout << "dp 테이블은 다음과 같다." << endl;
+	for (int i = 1; i < N + 1; i++) {
+		for (int j = 1; j < N + 1; j++) {
+			cout.width(5);
+			cout << dp[i][j];
+		}
+		cout << endl;
+	}
+}
+#endif // 1
+/*
+1 2 4
+1 4 6
+2 1 3
+2 3 7
+3 1 5
+3 4 4
+4 3 2
+*/
+/*고찰 : 책을 읽고
+구현을 더 단순하게 할 수 있었다. 초기의 그래프 상태를 계속 보면서 비교할 필요없이 초기화 이후에는 계속 갱신된 테이블을
+가지고서 최소값을 만들어내고 최종 갱신 테이블이 답이기에 애초에 문제에 필요한 테이블은 하나면 된다. 그리고 반박문의 조건도
+더 단순해졌다. 어차피 최소값만 가지고 비교할 것이기 때문에 dp[i][i]를 참조하든 말든 항상 0을 갱신하게 될것이다. 
+구현을 더 단순히 해보자
+*/
+//책보고 다시써보는 플로이드 워셜 알고리즘
+#if 0
+#include<iostream>
+#include<vector>
+#define INF 1e8
+using namespace std;
+int N, M; //노드의 개수와 간선의 개수
+
+void FloydWarshall(vector<vector<int>> (&graph)) {
+	//초기화 작업 : 각 그래프 탐색하면서 갈 수 있는 곳은 다 할당하고 자기 자신은 0으로 만들고
+	for (int i = 1; i < N + 1; i++) {
+		graph[i][i] = 0;
+	}
+
+	//반복하면서 해야될 것. dp테이블 최소값으로 갱신작업, 1번 노드를 거쳐가는 경우에는 1번을 제외한 녀석들이
+	//각자 도생의 방법으로 갈수 있는 경우에 dp테이블 최소값을 비교하며 저장
+	for (int i = 1; i < N + 1; i++) { //i는 지금 선택된 노드 거쳐가는 경우
+		for (int j = 1; j < N + 1; j++) { //j와 k는 i를 제외한 모든 노드의 경우를 탐색하기 위해서 
+			//if (j == i) {//i는 거쳐가는 경우이지 스타트도 도달도 되어선 안된다.
+			//	continue;
+			//}
+			for (int k = 1; k < N + 1; k++) { //j는 스타트 노드이고 k는 도달 노드일것이다.
+				//if (k == i || j == k) {//j와 k가 같은 경우도 따져볼 필요가 없다. 그냥 0이다.
+				//	continue;
+				//}
+				graph[j][k] = min(graph[j][k], graph[j][i] + graph[i][k]);
+			}
+		}
+	}
+}
+
+int main() {
+	cout << "노드의 개수와 간선의 개수를 공백을 기준으로 구별하여 입력" << endl;
+	cin >> N >> M;
+	//출발 노드 도달 노드 간선 가중치를 기반으로한 초기 그래프는 딱 한번만 쓸것이고 계속 갱신되기에 그 정보를
+	//두고 두고 사용할 그래프를 따로 만들필요가 없다. 그냥 2차원 벡터 하나면 된다.
+	vector<int> temp(N + 1, INF);
+	vector<vector<int>> graph(N + 1, temp);
+	cout << "출발 노드, 도착 노드, 간선의 가중치 공백을 기준으로 구별하여 입력하기를 엔터로 구별하여 총 간선의 개수만큼 반복" << endl;
+	for (int i = 0; i < M; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		graph[a][b] = c; //초기화 간소화
+	}
+	FloydWarshall(graph);
+	cout << "dp 테이블은 다음과 같다." << endl;
+	for (int i = 1; i < N + 1; i++) {
+		for (int j = 1; j < N + 1; j++) {
+			cout.width(5);
+			if (graph[i][j] >= INF)	cout << "INF";
+			else					cout << graph[i][j];
+
+		}
+		cout << endl;
+	}
+}
+#endif
+
+/*<2> <미래 도시> <해결>
+방문 판매원 A는 많은 회사가 모여 있는 공중 미래 도시에 있다. 공중 미래 도시에는 
+1번부터 N번까지의 회사가 있는데 특정 회사끼리는 서로 도로를 통해 연결되어 있다.
+방문 판매원 A는 현재 1번 회사에 위치해 있으며, X번 회사에 방문해 물건을 판매하고자한다. 
+
+공중 미래 도시에서 특정 회사에 도착하기 위한 방법은 회사끼리 연결되어 있는 도로를 이용하는
+방법이 유일하다. 또한 연결된 2개의 회사는 양방향으로 이동 가능하다. 공중 미래 도시에서의 
+도로는 마하의 속도로 사람을 이동시켜주기 때문에 특정 회사와 다른 회사가 도로로 연결되어 있다면,
+정확히 1만큼의 시간으로 이동할 수 있다.
+
+또한 오늘 방문 판매원 A는 기대하던 소개팅에도 참석하고자 한다. 소개팅의 상대는 K번 회사에 존재한다.
+방문 판매원 A는 X번 회사에 가서 물건을 판매하기 전에 먼저 소개팅 상대의 회사에 찾아가서 함께 커피를
+마실 예정이다. 따라서 방문 판매원 A는 1번 회사에서 출발하여 K번 회사를 방문한 뒤에 X번 회사로 가는
+것이 목표다. 이때 방문 판매원 A는 가능한 한 빠르게 이동하고자 한다. 방문 판매원이 회사 사이를 이동하게
+되는 최소 시간을 계산하는 프로그램을 작성하시오. 이때 소개팅의 상대방과 커피를 마시는 시간 등은 고려하지
+않는다. 예를들어 N=5, x=4, k=5이고 회사 간 도로가 7개면서 각 도로가 다음과 같이 연결되어 있을 때를 
+가정할 수 있다.
+(1번, 2번), (1번, 3번), (1번, 4번), (2번, 4번), (3번, 4번), (3번, 5번), (4번, 5번)
+한마디로 K를 들렀다가 X를 가는 최소 시간
+
+입력조건
+첫째 줄에 전체 회사의 개수 N과 경로의 개수 M이 공백으로 구분되어 주어짐. N과 M은 100이하
+둘째 줄부터 M+1번 줄까지 연결된 두 회사의 번호가 공백으로 구분되어 주어짐
+M+2번 줄에는 X와 K가 공백으로 구분되어 주어짐. K와 X는 당연히 100이하
+출력조건
+K를 거쳐 X로 가는 최소 이동 시간 출력 만약 갈수 없다면 -1 출력
+입력예시1
+5 7
+1 2
+1 3
+1 4
+2 4
+3 4
+3 5
+4 5
+4 5
+입력예시2
+4 2
+1 3
+2 4
+3 4
+
+<접근방법>
+목적지가 하나인 다익스트라 알고리즘으로 풀기엔 너무 비효율적이다. 어딘가를 거쳐간다는 아이디어는
+플로이드 워셜에서 사용한다. 모든 노드까지 가는 최소 경로를 다 경우의 수를 따져 비교해놓고나서
+나온 테이블을 가지고 조합하면 최소 경로 가는 길이가 될 것이다.
+*/
+
+//직접 풀이 플로이드 알고리즘으로 다시 구현해보기
+#if 0
+#include <vector>
+#include<iostream>
+#define INF 1e8
+using namespace std;
+int N, M, X, K;
+void solution(vector<vector<int>>(&graph)) {
+	//초기화 세팅
+	for (int i = 1; i < N + 1; i++) {
+		graph[i][i] = 0;
+	}
+	for (int i = 1; i < N + 1; i++) { //이거는 지금 거쳐가는 노드 값 최소값을 확인하기 위해.
+		for (int j = 1; j < N + 1; j++) {
+			for (int k = 1; k < N + 1; k++) {
+				graph[j][k] = min(graph[j][k], graph[j][i] + graph[i][k]);
+			}
+		}
+	}
+}
+int main() {
+	cout << "첫째 줄에 전체 회사의 개수 N과 경로의 개수 M이 공백으로 구분되어 주어짐." << endl;
+	cin >> N >> M;
+	vector<int> temp(N + 1, INF);
+	vector<vector<int>> graph(N + 1, temp);
+	cout << "둘째 줄부터 M+1번 줄까지 연결된 두 회사의 번호가 공백으로 구분되어 주어짐" << endl;
+	cout << "M + 2번 줄에는 X와 K가 공백으로 구분되어 주어짐.K와 X는 당연히 100이하" << endl;
+	for (int i = 0; i < M; i++) {
+		int a, b;
+		cin >> a >> b;
+		//아 여기서 문제가 생겼었네. a에서 b를 가는 방법만 1이 아니라 b에서 a를 가는 방법 또한 1이다.
+		graph[a][b] = 1;
+		graph[b][a] = 1;
+	}
+	cin >> X >> K;
+	solution(graph);
+	cout << endl;
+	int result = graph[1][K] + graph[K][X];
+	if (result >= INF)	cout << -1;
+	else	cout << result;
+}
+#endif // 1
+/*고찰 -> 해설보고
+ 별거 없다.
+*/
+
+/*<3> <전보>
+어떤 나라에는 N개의 도시가 있다. 그리고 각 도시는 보내고자 하는 메시지가 있는 경우,
+다른 도시로 전보를 보내서 다른 도시로 해당 메시지를 전송할 수 있다. 하지만 X라는
+도시에서 Y라는 도시로 전보를 보내고자 한다면, 도시X에서 Y로 향하는 통로가 설치되어
+있어야 한다. 예를 들어 X에서 Y로 향하는 통로는 있지만, Y에서 X로 통하는 통로가 없다면
+Y는 X로 메시지를 못보낸다. 또한 통로를 거쳐 메시지를 보낼때에는 일정 시간이 소요된다.
+
+어느날 C라는 도시에서 위급상황이 발생했다. 그래서 최대한 많은 도시로 메시지를 보내고자 한다.
+메시지는 도시 C에서 출발하여 각 도시 사이에 설치된 통로를 거쳐, 최대한 많이 퍼져나갈 것이다.
+각 도시의 번호와 통로가 설치되어 있는 정보가 주어졌을 때, 도시 C에서 보낸 메시지를 받게 되는 
+도시의 개수는 총 몇개이며 도시들이 모두 메시지를 받는 데 까지 걸리는 시간은 얼마인지 계산하는 
+프로그램을 작성하시오.
+
+입력조건
+첫째 줄에 도시의 개수 N, 통로의 개수 M, 메시지를 보내고자하는 도시 C가 주어진다.
+N은 3만이하, M은 2십만 이하, C는 당연히 N개 이하이다.
+둘째 줄부터 M+1번째 줄까지 통로에 대한 정보 X Y Z가 주어짐. 
+특정도시 X에서 특정도시 Y로이어지는 통로가 있다면 그때 걸리는 시간 Z라는 의미
+X Y는 N 이하이고, Z는 천이하
+출력조건
+도시 C에서 보낸 메시지를 받는 도시의 총 개수와 총 걸리는 시간을 공백으로 구분하여 출력
+
+입력예시			출력예시
+3 2 1			2 4
+1 2 4
+1 3 2
+
+<접근 방법>
+일단 플로이드 알고리즘도 될거 같고 다익스트라도 될거 같은데 다익스트라는 N제곱을 만족하고(혹은 ElogV)
+플로이드는 N세제곱을 만족해야한다. N은 3만개까지니까 이미 초과이고
+다익스트라는 이십만 곱하기 log삼만 이니까 다익스트라가 월등히 시간복잡도에서 앞서간다. 그리고 시작점은 고정이므로
+이미 충분하다.
+*/
+//직접구현
+#if 0
+#include<iostream>
+#include<queue>
+#include<algorithm>
+#define INF 1e8
+using namespace std;
+int N, M, C;
+
+void dijkstra(vector<vector<pair<int, int>>> graph, priority_queue<pair<int, int>> (&pq), vector<int> (&dp), vector<bool>(&visited)) {
+	//초기화 첫번째 시작점상태를 초기화, 보내려는 도시는 C로 주어진다.
+	int start = C, confirmed;
+	dp[start] = 0;
+	visited[start] = true;
+	for (auto n: graph[start]) {
+		dp[n.first] = n.second;
+		pq.push({ -1 * n.second, n.first });
+	}
+	//pq에서 가장 작은 가중치를 하나뽑고 탐색하고를 반복
+	while (!pq.empty()) {
+		start = pq.top().second;
+		confirmed = pq.top().first * -1;
+		visited[start] = true;
+		pq.pop();
+		for (auto n : graph[start]) {
+			dp[n.first] = min(dp[n.first], confirmed + dp[n.second]);
+			pq.push({ dp[n.first] * -1, n.first });
+		}
+	}
+	//dp테이블에서 가장 큰 값을 출력하면 된다. 정렬하는 방법이 있을거 같고, 우선순위 큐도 있고, 최대값도 있다.
+	//아 정렬하는 방법은 안되는게 INF 도달할수 없는 값이 있는 경우도 있으니까. 우선순위 큐도 안된다.
+	//선형탐색하면서 최대값을 가져오고 INF가 아닌 경우에 카운트도 해야된다.
+	int cnt = 0, answer = 0;
+	for (int i = 1; i < N + 1; i++) {
+		if (dp[i] >= INF || i==C) continue;
+		cnt++;
+		if (answer < dp[i]) answer = dp[i];
+	}
+	cout << cnt << endl;
+	cout << answer;
+}
+int main() {
+	cout << "첫째 줄에 도시의 개수 N, 통로의 개수 M, 메시지를 보내고자하는 도시 C가 주어진다." << endl;
+	cin >> N >> M >> C;
+	vector<vector<pair<int, int>>> graph(N + 1);
+	priority_queue<pair<int, int>> pq;
+	vector<bool>visited(N + 1);
+	vector<int> dp(N + 1 , INF);
+	cout << "둘째 줄부터 M+1번째 줄까지 통로에 대한 정보 X Y Z가 주어짐." << endl;
+	cout << "특정도시 X에서 특정도시 Y로이어지는 통로가 있다면 그때 걸리는 시간 Z라는 의미" << endl;
+	for (int i = 0; i < M; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		graph[a].push_back({ b,c });
+	}
+	dijkstra(graph, pq, dp, visited);
+}
+#endif // 1
+/*고찰 (책내용) : 별거 없다.*/

@@ -151,6 +151,7 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_13\Test_13.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_14\Test_14.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_15\Test_15.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_16\Test_16.cpp" />
     <ClCompile Include="algo_01_01.cpp" />
     <ClCompile Include="Ch03Greedy.cpp" />
     <ClCompile Include="Ch04Implementcpp.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="Ch07BinarySearch.cpp" />
     <ClCompile Include="Ch08DynamicProgramming.cpp" />
     <ClCompile Include="Ch09ShortestPath.cpp" />
+    <ClCompile Include="Ch10GraphTheory.cpp" />
     <ClCompile Include="day005.cpp" />
     <ClCompile Include="day006.cpp" />
     <ClCompile Include="day007.cpp" />
