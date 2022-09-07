@@ -464,3 +464,286 @@ int main() {
 	}
 }
 #endif // 1
+
+/*<위상 정렬 Topology Sort>
+우선순위가 정해진 작업이 있다고 하자. 그때 1번 2번 3번 4번 등 순서가 정해질텐데
+이 순서를 어떻게 정의할지 정렬하는 알고리즘.
+예를들어 선수과목의 예시가 있다. 자료구조 -> 알고리즘 
+자료구조, 알고리즘-> 고급알고리즘 의 관계가 있다면 알고리즘만 배워서는
+고급 알고리즘을 배울 수 없다. 자료구조를 배워서 알고리즘을 배우고 고급알고리즘을
+배워야하는 순서가 생긴다.
+이런 방식은 방향 그래프로 표현할 수 있는데 이런 방향 그래프 개념에서 모든 
+작업을 찾아가기 위한 순서정렬이 위상 정렬이다.
+
+특징
+1.DAG(Direct Acyclic Graph): 사이클이 존재하지 않는 방향그래프 여야한다.
+2. 여러가지 답이 나올 수 있다. 한 단계에서 다음 단계로 가는 가지수가 여러개라면
+여러 순위가 나올 수도 있다.
+3. 모든 원소에 대해 만족하기 전에 더이상 진행할 수 없다면 중간에 사이클이 존재하는 것
+만약 처음부터 시작할 수 없다면 전체가 사이클집합으로 존재하는 것이다.
+4. 큐를 이용하여 위상 정렬을 수행할 수 있고 스택을 활용한 DFS도 가능하다.
+
+방법
+1. 진입차수가 0인 노드를 전부 찾아 큐에 먼저 넣는다.
+2. 큐에 존재하는 노드를 하나씩 순서대로 꺼내면서 그 꺼낸 노드의 진출차수가
+0이 되도록 진출간선을 찾아 제거한다.
+3. 제거한 간선에 의해 진입 차수가 0이된 노드들이 존재 할 수 있다. 그 노드를 찾아
+검색하며 만약 진입차수가 0이라면 큐에 넣는다. 이는 1번의 반복이다.
+4. 다시 2번을 반복하며 큐가 빌때까지 1번 2번을 계속 반복한다. 만약 비었을때 모든 
+노드가 큐에서 푸쉬팝이 된 것이확인 된다면 사이클이 존재하지 않고 알맞게 정렬 최적해를
+찾은 셈이다. 만약 사이클이 존재하여 진행이 안된다면 정렬최적해를 보장할 수 없다.
+
+입력예시		출력예시
+7 8			1 2 5 3 6 4 7
+1 2 
+1 5
+2 3
+2 6
+3 4
+4 7
+5 6
+6 4
+*/
+
+//큐를 활용한 직접 구현 위상정렬(topology sort)
+#if 0
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int V, E;
+vector<int> topologySort(vector<pair<int, vector<int>>> graph) {
+	//초기화 과정.
+	vector<int> answer;
+	queue<int> topologyQ;
+	for (int node = 1; node < V + 1; node++) {
+		if (graph[node - 1].first == 0) topologyQ.push(node); //진입차수가 0이면 추가
+	}
+	if (topologyQ.empty()) {
+		cout << "전체가 사이클로 구성된 그래프입니다." << endl;
+		return answer;
+	}
+	while (!topologyQ.empty()) {
+		vector<int> temp;
+		int node = topologyQ.front();
+		topologyQ.pop();
+		answer.push_back(node);
+		for (auto n : graph[node - 1].second) {
+			graph[n - 1].first--;
+			if (graph[n - 1].first == 0) temp.push_back(n);
+		}
+		for (auto n : temp) topologyQ.push(n);
+	}
+	if(answer.size()==V){
+		cout << "위상 정렬 완료" << endl;
+		for (auto n : answer) cout << n << ' ';
+		return answer;
+	}
+	else {
+		cout << "중간에 사이클이 존재하여 완료하지 못함" << endl;
+		return answer;
+	}
+	
+}
+int main() {
+	cout << "노드의 개수와 간선의 개수를 공백으로 구별하여 입력" << endl;
+	cin >> V >> E;
+	vector<pair<int,vector<int>>> graph(V);//진입차수가 first, 인접노드배열이 second
+	cout << "노드와 그 노드에서 나가는 진출간선이 어느 노드로 가는지를" <<endl;
+	cout << "공백으로 구별하여 간선의 개수만큼 입력" << endl;
+	for (int i = 0; i < E; i++) {
+		int a, b;	cin >> a >> b;
+		graph[a - 1].second.push_back(b);
+		graph[b-1].first++;
+	}
+	auto result = topologySort(graph);
+}
+#endif // 1
+
+/*<2> <팀 결성>
+학교에서 학생들에게 0번부터 N번까지의 번호를 부여했다. 처음에는 모든 학생이
+서로 다른 팀으로 구분되어, 총 N+1개의 팀이 존재한다. 이때 선생님은 '팀 합치기'
+연산과 '같은 팀 여부확인'연산을 사용할 수 있다.
+1. 팀 합치기 연산은 두 팀을 합치는 것
+2. 같은 팀 여부 확인은 두 학생이 같은 팀에 속하는지를 확인하는 연산
+
+선생님이 M개의 연산을 수행할 수 있을때, 같은 팀 여부 확인 연산에 대한 연산 결과를 
+출력하는 프로그램을 작성하시오.
+입력조건
+1. 첫째 줄에 N,M이 주어진다. M은 입력으로 주어지는 연산의 개수이다. 10만 이하
+0번부터 N번까지니까 N+1개의 번호를 부여받은 학생들이 처음에 존재한다.
+2. 다음 M개의 줄에는 각각의 연산이 주어짐.
+3.팀 합치기 연산은 0 a b 형태로 주어짐. 이는 a와 b를 합친다는 뜻
+4. 같은 팀 여부 확인은 1 a b로 주어짐.
+5. a와 b는 N 이하의 양의 정수
+출력조건
+같은 팀 여부 확인 연산에 대하여 한 줄에 하나씩 YES 혹은 NO로 결과를 출력한다.
+
+입력예시		출력예시
+7 8			NO NO YES
+0 1 3
+1 1 7
+0 7 6
+1 7 1
+0 3 7
+0 4 2
+0 1 1
+1 1 1
+
+<접근방법>
+대놓고 Union-find 사용하라는 문제니까 서로소 집합개념을 사용한다.
+find는 루트노드를 탐색할때 자기자신노드와 루트노드가 일치할때까지 그 루트노드 번호로
+계속 탐색하며 갱신하는 코드
+union은 루트노드를 가지고 서로 비교하며 더 작은 루트노드로 루트노드를 갱신하여
+같은 집합에 속하도록 하는 합집합 연산. 이미 같은 루트노드를 가지고 있는데 또
+합집합 연산을 하는건 사이클 생성을 하는 연산이 된다.
+
+*/
+#if 0
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+int find_parent(int i, vector<int>(&dp)) {
+	if (i == dp[i]) return i;
+	else return find_parent(dp[i], dp);
+}
+void union_parent(int i, int j, vector<int>(&dp)) {
+	int a = find_parent(i, dp);
+	int b = find_parent(j, dp);
+	if (a < b) { dp[j] = dp[i]; /*cout << "NO ";*/ }
+	else { dp[i] = dp[j]; /*cout << "NO";*/ }
+}
+string isSameRoot(int i, int j, vector<int>(&dp)) {
+	int a = find_parent(i, dp);
+	int b = find_parent(j, dp);
+	if (a == b)		return "YES ";
+	else if (a < b)	return "NO ";
+	else			return "NO ";
+}
+int main() {
+	int N, M;
+	cout << "학생의 마지막 번호 N과 총 연산의 개수 M을 공백으로 구분하여 입력" << endl;
+	cin >> N >> M;
+	vector<int>dp(N + 1);//루트노드를 저장하는 벡터
+	vector<string>result;
+	for (int i = 1; i < N + 1; i++) {
+		dp[i] = i;
+	}
+	cout << "M개의 연산들이 주어진다. 앞번호가 0이면 합치기 1이면 확인" << endl;
+	for (int i = 0; i < M; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		if (a == 0) {//합집합
+			union_parent(b, c, dp);
+		}
+		else {//같은 팀 여부 확인
+			result.push_back(isSameRoot(b, c, dp));
+		}
+	}
+	for (auto n : result) cout << n;
+}
+#endif // 1
+/*<3> <도시 분할 계획>
+동물원에서 막 탈출한 원숭이 한 마리가 세상 구경을 한다.
+마을은 N개의 집과 그 집들을 연결하는 M개의 길로 이루어져 있다. 길은 어느 방향으로든지
+다닐 수 있는 편리한 길(무방향 그래프) 그리고 길을 유지하는 유지비가 있다.
+마을 이장은 2개의 분리된 마을로 분할할 계획을 세우고 있다. 마을이 너무 커서 혼자서는
+관리하기 어렵기 때문이다. 마을을 분할할 때 각 분리된 마을 안에 집들이 서로 연결되도록
+분할해야 한다. 각 분리된 마을 안에 있는 임의의 두 집 사이에 경로가 항상 존재해야 한다는 뜻
+마을에는 집이 하나 이상 있어야 한다.(모두 연결되어 있어야함.)
+그렇게 계획을 세우다가 마을 안에 길이 너무 많다는 생각을 하여 필요없는 길은 없애려고한다.
+일단 분리된 두 마을 사이에 연결된 길은 없어도 상관없다. 개별적인 마을이기 때문이다.
+마을안에서도 굳이 필요없는길은 없애도 된다.
+유지비의 합을 최소로 유지하고 싶을때 그것을 항상 구하는 프로그램 작성.
+
+입력조건
+1. 첫째 줄에 집의 개수 M, 길의 개수 M이 주어진다. N은 10만이하 M은 100만이하
+2. M개의 줄을 거쳐 길의 정보가 A, B, C 3개의 정수로 공백으로 구분되어 주어지는데
+A번 집과 B번 집을 연결하는 길의 유지비가 C라는 뜻 1000이하
+출력조건
+첫째 줄에 길을 없애고 남은 유지비 합의 최솟값을 출력한다.
+
+<접근방법>
+무방향 그래프가 나오면 크루스칼 알고리즘을 떠올려라.
+크루스칼 알고리즘은 신장트리를 만드는 알고리즘이다.
+신장트리란 모든 노드를 노드-1개의 간선을 이용하여 연결되어 있는 트리이다.
+이장님이 원하는 도시계획은 신장 트리 2개를 만드는 것과 동일하기에 쓰기 적절하다.
+그런데 어떤 기준으로 2개를 나누고 또 어떻게해야 최적해를 만족할 수 있을지..
+생각해보니 신장트리를 만들고 그 사이를 끊으면 그냥 2개의 신장트리가 만들어지는 것이다.
+그럼 처음부터 신장트리를 만들면 된다. 만약 못만드는 경우가 생기면 그 경우를 시작노드로
+다시 신장트리를 만들면되고 만약 다 만들어졌으면 가장 가중치 값이 큰 녀석을 자르면 그게 신장트리지.
+
+1. 탐욕법을 위해 간선 가중치 비용이 가장 작은 것부터 오름차순으로 정렬한다.
+2. 가장 작은 비용의 간선을 우선순위로 하여 그래프 union-find 연산을 통해 루트노드값을
+확인하고 같은 루트노드가 아니라면 신장트리 간선으로 포함하고, 같은 루트노드값을 이미
+가지고 있다면 이번 간선은 사이클을 만드는 간선이므로 제외하고 다음 그리디로 넘어간다.
+3. 그렇게 하여 신장트리 간선이 노드-1개 만큼 채워지면 그게 바로 신장트리이다.
+
+입력예시			출력예시
+7 12			8
+1 2 3
+1 3 2
+3 2 1
+2 5 2
+3 4 4
+7 3 6
+5 1 5
+1 6 2
+6 4 1
+6 5 3
+4 5 3
+6 7 4
+*/
+#if 1
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+vector<pair<int, pair<int, int>>> graph; //가중치값을 first 노드들을 second
+vector<int>dp;
+vector<pair<int, pair<int, int>>> spanningtree;
+int cnt;
+
+int find_Parent(int i) {
+	if (i == dp[i]) return dp[i];
+	else return find_Parent(dp[i]);
+}
+void union_Parent(int i, int j, int k) {
+	int a = find_Parent(i);
+	int b = find_Parent(j);
+	if (a == b) { return; }
+	else if (a < b) { dp[j] = a; }
+	else { dp[i] = b; }
+	spanningtree.push_back({ k, {i, j} });
+	cnt++;
+}
+vector<pair<int, pair<int, int>>> kruscal() {
+	cnt = 0;
+	sort(graph.begin(), graph.end()); //가중치를 오름차순으로 정렬
+	for (int i = 0; i < graph.size(); i++) {
+		auto n = graph[i].second;
+		union_Parent(n.first, n.second, graph[i].first);
+		if (cnt == dp.size() - 2) break;
+	}
+}
+
+int main() {
+	int N, M;
+	cout << "집의 개수 N과 간선의 개수 M을 공백으로 구분하여 입력" << endl;
+	cin >> N >> M;
+	for (int i = 0; i < N + 1; i++) {
+		dp[i] = i;
+	}
+	cout << "간선의 개수 만큼 a b c를 공백으로 구별해서 입력 a와 b를 잇는 길의 유지비는 c" << endl;
+	for (int i = 0; i < M; i++) {
+		int a, b, c;
+		cin >> a >> b >> c;
+		graph.push_back({ c,{a, b} });
+	}
+	
+}
+#endif // 1
+
+
