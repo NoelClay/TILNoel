@@ -139,9 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\AlgorithmProblemSolvingStrategies\algo_01_01.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_02\Test_2.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_03\Test_3.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_04\Test_4.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_05\Test_05.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_06\Test_06.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_07\Test_7.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_08\Test_8.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_09\Test_9.cpp" />
@@ -152,42 +155,17 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_14\Test_14.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_15\Test_15.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_16\Test_16.cpp" />
-    <ClCompile Include="algo_01_01.cpp" />
-    <ClCompile Include="Ch03Greedy.cpp" />
-    <ClCompile Include="Ch04Implementcpp.cpp" />
-    <ClCompile Include="Ch05DFSBFS.cpp" />
-    <ClCompile Include="Ch06Sorting.cpp" />
-    <ClCompile Include="Ch07BinarySearch.cpp" />
-    <ClCompile Include="Ch08DynamicProgramming.cpp" />
-    <ClCompile Include="Ch09ShortestPath.cpp" />
-    <ClCompile Include="Ch10GraphTheory.cpp" />
-    <ClCompile Include="day005.cpp" />
-    <ClCompile Include="day006.cpp" />
-    <ClCompile Include="day007.cpp" />
-    <ClCompile Include="day008.cpp" />
-    <ClCompile Include="day009.cpp" />
-    <ClCompile Include="day012.cpp" />
-    <ClCompile Include="day013.cpp" />
-    <ClCompile Include="day014.cpp" />
-    <ClCompile Include="day015.cpp" />
-    <ClCompile Include="day016.cpp" />
-    <ClCompile Include="day017.cpp" />
-    <ClCompile Include="day018.cpp" />
-    <ClCompile Include="day019.cpp" />
-    <ClCompile Include="day020.cpp" />
-    <ClCompile Include="day021.cpp" />
-    <ClCompile Include="day022.cpp" />
-    <ClCompile Include="day023.cpp" />
-    <ClCompile Include="day024.cpp" />
-    <ClCompile Include="day025.cpp" />
-    <ClCompile Include="day003.cpp" />
-    <ClCompile Include="day004.cpp" />
-    <ClCompile Include="day010.cpp" />
-    <ClCompile Include="day011.cpp" />
-    <ClCompile Include="Test_05.cpp" />
-    <ClCompile Include="Test_6.cpp" />
-    <ClCompile Include="TIC_01.cpp" />
-    <ClCompile Include="TIC_02.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_17\Test_17.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch03Greedy.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch04Implementcpp.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch05DFSBFS.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch06Sorting.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch07BinarySearch.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch08DynamicProgramming.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch09ShortestPath.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch10GraphTheory.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCPP\TIC_01.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCPP\TIC_02.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
