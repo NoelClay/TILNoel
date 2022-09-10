@@ -704,7 +704,7 @@ using namespace std;
 vector<pair<int, pair<int, int>>> graph; //가중치값을 first 노드들을 second
 vector<int>dp;
 vector<pair<int, pair<int, int>>> spanningtree;
-int cnt;
+int cnt,answer;
 
 int find_Parent(int i) {
 	if (i == dp[i]) return dp[i];
@@ -714,18 +714,36 @@ void union_Parent(int i, int j, int k) {
 	int a = find_Parent(i);
 	int b = find_Parent(j);
 	if (a == b) { return; }
-	else if (a < b) { dp[j] = a; }
+	else if (a < b) { dp[j] = a; }//같은 집합에 속할때 간선을 연결하면 사이클이되어 망함.
 	else { dp[i] = b; }
-	spanningtree.push_back({ k, {i, j} });
-	cnt++;
+	spanningtree.push_back({ k, {i, j} });//어찌되었든 스패닝트리의 간선으로 되었으니 추가한다.
+	cnt++;//카운트 증가
 }
-vector<pair<int, pair<int, int>>> kruscal() {
+int kruscal() {
 	cnt = 0;
 	sort(graph.begin(), graph.end()); //가중치를 오름차순으로 정렬
-	for (int i = 0; i < graph.size(); i++) {
-		auto n = graph[i].second;
-		union_Parent(n.first, n.second, graph[i].first);
-		if (cnt == dp.size() - 2) break;
+	for (int i = 0; i < graph.size(); i++) { //그래프를 선형탐색한다. 그래프는 간선의 개수만큼 들어있다.
+		auto n = graph[i].second;//그래프에서 노드정보를 저장한다.
+		union_Parent(n.first, n.second, graph[i].first); //노드,노드,간선으로 합집합
+		if (cnt == dp.size() - 2) break; //만약 노드-1개를 결국 만족하게 되면 뒤에건 볼것도 없이 종료.
+	}
+	if (cnt < dp.size() - 2) { //반복문이 다 돌았음에도 불구하고 노드-1개만큼 충족하지 못했다.
+		//이는 마을 하나가 신장트리를 다 만족할 수 없었음을 뜻한다. 즉 신장트리를 만들기위한 간선 부족
+		//하지만 군데 군데 결국 2개 이상의 신장트리들을 생성했을것. 사이클은 만들지 않았으니.
+		//하지만 그럼 문제의 오류 아닌가? 항상 마을은 신장트리 그 이상의 간선을 보유하고 있을 것이다.
+		cout << "신장트리를 만들지 못했음" << endl;
+		return -1;
+	}
+	else {
+		//만들어진 신장트리에서 반을 자를 차례. 가장 긴 루트를 잘라버린다. 그러면서 동시에 합도 계산한다.
+		answer = 0;
+		int mnum = 0;
+		for (auto n : spanningtree) {
+			mnum = max(mnum, n.first);
+			answer += n.first;
+		}
+		answer -= mnum;
+		return answer;
 	}
 }
 
@@ -734,7 +752,7 @@ int main() {
 	cout << "집의 개수 N과 간선의 개수 M을 공백으로 구분하여 입력" << endl;
 	cin >> N >> M;
 	for (int i = 0; i < N + 1; i++) {
-		dp[i] = i;
+		dp.push_back(i);
 	}
 	cout << "간선의 개수 만큼 a b c를 공백으로 구별해서 입력 a와 b를 잇는 길의 유지비는 c" << endl;
 	for (int i = 0; i < M; i++) {
@@ -742,8 +760,127 @@ int main() {
 		cin >> a >> b >> c;
 		graph.push_back({ c,{a, b} });
 	}
+	auto result = kruscal();
+	cout << result;
 	
 }
 #endif // 1
+/*<4><커리큘럼>
+동빈이는 온라인으로 컴퓨터공학 강의를 듣고 있다. 이때 각 온라인 강의는 선수 강의가
+있을 수 있는데, 선수 강의가 있는 강의는 선수 강의를 먼저 들어야만 해당 강의를
+들을 수 있다.
+총 N개의 강의를 듣고자 한다. 모든 강의는 1번부터 N번까지의 번호를 가진다. 또한 동시에
+여러 개의 강의를 들을 수 있다고 가정한다. 예를 들어 N=3일때, 3번 강의의 선수과목이
+1번 2번이고, 그 둘은 선수강의가 없다. 각 강의 시간은 번호순으로 30 20 40이다.
+1번강의와 2번강의는 동시에 들을 수 있다. 결국 1번강의인 30시간 후에 3번강의 40시간을
+들을 수 있으므로 70시간이 최소 시간이다. 이런 최소시간을 출력하는 프로그램 작성
+
+입력조건
+1. 첫째 줄에 강의의 수 N 500이하 
+2. 다음 N개의 줄에는 각 강의의 강의시간과 그 강의를 듣기 위해 먼저 들어야하는
+선수 강의들의 번호가 자연수로 주어짐. 각 자연수들은 공백으로 구분한다.
+강의시간은 10만이하
+3. 각 강의 번호는 1~N으로 구성되며, 각 줄은 -1로 끝난다.
+출력조건
+N개의 강의에 대하여 수강하기까지 걸리는 최소 시간을 한줄에 하나씩 출력
+
+입력 예시			출력예시
+5					10 20 14 18 17
+10 -1
+10 1 -1
+4 1 -1
+4 3 1 -1
+3 3 -1
+
+<접근방법>
+1. 입력이 특이하다. 워낙 변칙적으로 한 줄에 들어가는 숫자의 양이 달라지므로
+-1로 단계를 구분하는 코드가 필요하다.
+2. 선수강의 문제는 위상정렬! 진입노드가 없는 녀석이 스타트이고 인접노드를 향하는
+간선을 가진 진입간선을 제거한 노드를 체크하여 처리하는 방식으로 진행되면 정렬이 이루어진다.
+3.이때 각 순위체크를 하여 동등 순위 등을 체크하는 테이블을 만들 필요가 있다. 
+그 중 가장 큰 시간값을 누적합하여 최종 최소시간을 구한다.
+4.위상정렬의 원리 왜 큐를 사용할까?
+큐는 검사 순서가 정해져있을때 아주 최적의 효율을 보인다. 만약 위상정렬 만들시에 끝까지
+도달하지 못했는데 중간에 진입차수가 0인 녀석들이 없어진다면, 반드시 그 안에서 사이클이 돌고 있어서
+진입차수가 0이 되는 애들이 없는것이다.
+그리고 진입차수가 0인 애들이 동시 우선순위를 가지게 된다. 그럴때 그녀석들을 구분하는
+테이블만 갖춰지면 누적합 추적도 쉽게 가능하다.
+*/
+#if 1
+#include<vector>
+#include<iostream>
+#include<algorithm>
+#include<queue>
+using namespace std;
+
+//큐를 활용한 토폴로지소트
+int topologySort(vector<pair<int, vector<pair<int, int>>>> graph) {
+	//초기화 관련 코드 진입차수가 0인 노드들을 찾아 큐에 넣는다.
+	int answer = 0;
+	queue<int> startnodeQ;
+	int V = graph.size() - 1;//노드의 개수
+	for (int i=0; i < graph.size(); i++) {
+		if (graph[i].first == 0) {
+			startnodeQ.push(i);
+		}
+	}
+	if (startnodeQ.empty()) {//진입차수가 0인놈이 없다면
+		cout << "완전히 사이클화 되어 순서를 정할수가 없는 수강표입니다." << endl;
+		cout << "이는 오류로 입력값의 검토가 필요합니다." << endl;
+		return -1;
+	}
+	vector<int> samerank;
+	while (!startnodeQ.empty()) {//빌때까지 반복할것. 만약 비었을때 위상정렬에 
+		//모든 노드가 존재하게 되면 옳게되었음. 그렇지 않다면 선수과목 논리에 오류가 있다.
+		samerank.clear();
+		int temp = 0;
+		while (!startnodeQ.empty()) { //요번 위상정렬에는 같은 등급의 우선순위를 묶을 필요가 있다.
+			samerank.push_back(startnodeQ.front());
+			temp = max(graph[startnodeQ.front()].second[0].second, temp); //같은 등급에서 최상값
+			startnodeQ.pop();
+		}
+		answer += temp;
+		
+		//이때 스타트노드에 들어있는 걸 하나 빼서 그 인덱스에 연결된 진출간선을 하나씩 제거하는 연산
+		for (auto n : samerank) {//스타트노드에 등록된 진출노드 하나씩 조회
+			for (auto k : graph[n].second) {
+				graph[k.first].first--; //그 노드의 진입 차수 하나 제거
+				if (graph[k.first].first == 0) startnodeQ.push(k.first); //그럴때 진입 차수가 0가 되면 큐에 추가
+			}
+		}
+	}
+	return answer;
+}
+
+int main() {
+	int N;
+	cout << "강의의 개수 N을 입력하라" << endl;
+	cin >> N;
+	vector<pair<int, vector<pair<int,int>>>> graph(N+1); //인덱스는 강의 넘버
+	//graph[i].first는 진입차수 
+//graph[i].second는 {진출노드, 진출하기까지의 강의시간 즉 i의 시간}
+	cout << "줄로 나누어 n번째 강의시간 선수 강의들의 번호가 자연수로 주어짐. 각 수들은 공백으로 구분한다." << endl;
+	for (int i = 0; i < N+1; i++) {
+		if (i == 0) {
+			graph[i] = { 10000000,{{0,0}} };
+			continue;
+		}
+		int a, b;
+		cin >> a; //첫번째 수는 반드시 강의 시간이다.
+		while (true) {
+			cin >> b;
+			if (b == -1) break;
+			else {
+				graph[i].second.push_back({ b, a });//선수강의 추가하고 
+				//선수강의의 진입차수는 하나 증가한다.
+				graph[b].first++;
+			}
+		}
+	}
+	auto result = topologySort(graph);
+	cout << result;
+}
+#endif // 1
+
 
 
