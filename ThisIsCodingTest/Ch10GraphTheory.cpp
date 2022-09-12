@@ -805,6 +805,11 @@ N개의 강의에 대하여 수강하기까지 걸리는 최소 시간을 한줄에 하나씩 출력
 진입차수가 0이 되는 애들이 없는것이다.
 그리고 진입차수가 0인 애들이 동시 우선순위를 가지게 된다. 그럴때 그녀석들을 구분하는
 테이블만 갖춰지면 누적합 추적도 쉽게 가능하다.
+5. 입력을 할때 -1을 기준으로 인덱스 증가하는거 오케이 처음에 저장할건 바로 진입차수
+둘째로 강의 시간 셋째로 듣기위한 강의 시간 넷째로 선수강의 번호가 나오면 선수강의의
+진입차수가 올라가는게 아니라 지금 인덱스 강의의 진입차수가 올라가는 것이다.
+지금 인덱스강의의 최소강의시간은 선수강의들의 최적시간에 달려있다.
+6.위상정렬을 마치고나서 최소시간 계산하는 반복문을 하나 더 만들어야될거 같다.
 */
 #if 1
 #include<vector>
@@ -814,12 +819,18 @@ N개의 강의에 대하여 수강하기까지 걸리는 최소 시간을 한줄에 하나씩 출력
 using namespace std;
 
 //큐를 활용한 토폴로지소트
-int topologySort(vector<pair<int, vector<pair<int, int>>>> graph) {
+vector<int> topologySort(vector<pair<int, vector<int>>> graph, vector<int> times) {
 	//초기화 관련 코드 진입차수가 0인 노드들을 찾아 큐에 넣는다.
-	int answer = 0;
+	int start, rank=0;
+	vector<int> samerank;
+	vector<int> answer(times.size());
+	vector<vector<int>> ranklist;
+	for (int i = 1; i < times.size(); i++) {
+		answer[i] = times[i];
+	}
 	queue<int> startnodeQ;
 	int V = graph.size() - 1;//노드의 개수
-	for (int i=0; i < graph.size(); i++) {
+	for (int i=0; i < graph.size(); i++) {//진입차수가 0인 놈 즉 최우선 선수강의가 들어간다.
 		if (graph[i].first == 0) {
 			startnodeQ.push(i);
 		}
@@ -827,58 +838,65 @@ int topologySort(vector<pair<int, vector<pair<int, int>>>> graph) {
 	if (startnodeQ.empty()) {//진입차수가 0인놈이 없다면
 		cout << "완전히 사이클화 되어 순서를 정할수가 없는 수강표입니다." << endl;
 		cout << "이는 오류로 입력값의 검토가 필요합니다." << endl;
-		return -1;
+		return { -1 };
 	}
-	vector<int> samerank;
-	while (!startnodeQ.empty()) {//빌때까지 반복할것. 만약 비었을때 위상정렬에 
-		//모든 노드가 존재하게 되면 옳게되었음. 그렇지 않다면 선수과목 논리에 오류가 있다.
+	while (!startnodeQ.empty()) { //빌때까지 반복한다.
 		samerank.clear();
-		int temp = 0;
-		while (!startnodeQ.empty()) { //요번 위상정렬에는 같은 등급의 우선순위를 묶을 필요가 있다.
-			samerank.push_back(startnodeQ.front());
-			temp = max(graph[startnodeQ.front()].second[0].second, temp); //같은 등급에서 최상값
+		while (!startnodeQ.empty()) {
+			start = startnodeQ.front();//최우선강의 노드번호
 			startnodeQ.pop();
+			//answer.push_back(start);
+			samerank.push_back(start);
 		}
-		answer += temp;
-		
-		//이때 스타트노드에 들어있는 걸 하나 빼서 그 인덱스에 연결된 진출간선을 하나씩 제거하는 연산
-		for (auto n : samerank) {//스타트노드에 등록된 진출노드 하나씩 조회
-			for (auto k : graph[n].second) {
-				graph[k.first].first--; //그 노드의 진입 차수 하나 제거
-				if (graph[k.first].first == 0) startnodeQ.push(k.first); //그럴때 진입 차수가 0가 되면 큐에 추가
+		ranklist.push_back(samerank);
+		for (auto n : samerank) {
+			//선수강의의 정보를 받을때마다 선수강의 인덱스로 후수강의 노드번호를 추가했다.
+			for (auto m : graph[n].second) {//이건 그 후수강의 노드번호이다.
+				graph[n].first--;//후수강의 진입차수 하나 제거
+				if (graph[n].first == 0) startnodeQ.push(n);
 			}
 		}
 	}
-	return answer;
+	//answer은 노드의 위상이 정렬되어 있다.
+	for (int i = 0; i < ranklist.size(); i++) {
+		for (auto j : ranklist[i]) { //랭크 리스트 맨 앞에 있는게 위상정렬 순위 높은것.
+			for (int k = i; k >= 0; k--) {//0일땐 0, 1일땐 1 0, 2일땐 2 1 0
+
+			}
+		}
+
+	}
 }
 
 int main() {
 	int N;
 	cout << "강의의 개수 N을 입력하라" << endl;
 	cin >> N;
-	vector<pair<int, vector<pair<int,int>>>> graph(N+1); //인덱스는 강의 넘버
+	vector<int> times(N + 1, 1e8);//인덱스는 강의 넘버 요소는 강의시간
+	vector<pair<int, vector<int>>> graph(N+1); //인덱스는 강의 넘버 요소는 진입차수, 진출노드배열
 	//graph[i].first는 진입차수 
-//graph[i].second는 {진출노드, 진출하기까지의 강의시간 즉 i의 시간}
+
 	cout << "줄로 나누어 n번째 강의시간 선수 강의들의 번호가 자연수로 주어짐. 각 수들은 공백으로 구분한다." << endl;
 	for (int i = 0; i < N+1; i++) {
 		if (i == 0) {
-			graph[i] = { 10000000,{{0,0}} };
+			graph[i] = { 10000000,{{0}} };
 			continue;
 		}
 		int a, b;
 		cin >> a; //첫번째 수는 반드시 강의 시간이다.
+		times[i] = a;
 		while (true) {
 			cin >> b;
 			if (b == -1) break;
 			else {
-				graph[i].second.push_back({ b, a });//선수강의 추가하고 
-				//선수강의의 진입차수는 하나 증가한다.
-				graph[b].first++;
+				graph[b].second.push_back(i);//선수강의를 추가해서는 안된다. 선수강의에 후수강의를 추가해야한다.
+				//후수강의의 진입차수는 하나 증가한다.
+				graph[i].first++;
 			}
 		}
 	}
-	auto result = topologySort(graph);
-	cout << result;
+	auto result = topologySort(graph, times);
+	for (auto n : result) cout << n << ' ';
 }
 #endif // 1
 
