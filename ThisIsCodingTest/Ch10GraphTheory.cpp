@@ -811,7 +811,7 @@ N개의 강의에 대하여 수강하기까지 걸리는 최소 시간을 한줄에 하나씩 출력
 지금 인덱스강의의 최소강의시간은 선수강의들의 최적시간에 달려있다.
 6.위상정렬을 마치고나서 최소시간 계산하는 반복문을 하나 더 만들어야될거 같다.
 */
-#if 1
+#if 0
 #include<vector>
 #include<iostream>
 #include<algorithm>
@@ -857,14 +857,16 @@ vector<int> topologySort(vector<pair<int, vector<int>>> graph, vector<int> times
 			}
 		}
 	}
-	//answer은 노드의 위상이 정렬되어 있다.
+	//랭크 리스트를 탐색해 나가며 타임 테이블을 정리한다. 첫번째 진입노드가 0인놈들은 아무 영향없이 본값일 것이고
+	//진입노드가 있는 애들은 그 노드값에 자기 값을 더한 값이 될 것이다.
+	//그래프에 저장되어 있는 정보는 후위 강의 번호 일테니까 랭크 리스트 0번에서 시작하는 음 한번 해볼까
 	for (int i = 0; i < ranklist.size(); i++) {
-		for (auto j : ranklist[i]) { //랭크 리스트 맨 앞에 있는게 위상정렬 순위 높은것.
-			for (int k = i; k >= 0; k--) {//0일땐 0, 1일땐 1 0, 2일땐 2 1 0
-
-			}
+		for (int j = 0; j < ranklist[i].size(); j++) {
+			//처음은 한번만 반복할 것이지.
+			int startnode = ranklist[i][j];
+			int startnodetime = times[startnode];
+			answer[startnode];
 		}
-
 	}
 }
 
@@ -899,6 +901,11 @@ int main() {
 	for (auto n : result) cout << n << ' ';
 }
 #endif // 1
+/*고찰(미해결)
+도저히 누적된 시간값을 반환하는 최적해 공식을 어떻게 만들어야 될지 모르겠다. 그러니까 어떤 절차를 거치는지는
+알겠는데 그걸 컴퓨터적으로 어떻게 절차적으로 표현할지를 모르겠다. 절차적프로그래밍 구현개념이 부족한거 같다.
+*/
+
 
 
 
