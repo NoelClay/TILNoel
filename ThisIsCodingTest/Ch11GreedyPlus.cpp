@@ -40,16 +40,121 @@ N은 10만이하 자연수들은 둘째 줄 부터 공백으로 구분하여 입력됨.
 2 2 2 2 2 2 3 이라면 그냥 2끼리 2명 고용하는게 베스트이다. 평균값을 위해 여러 조합을 고려할 필요가 없다.
 최대값의 영향력이 지대적이기 때문이다.
 */
-#if 1
+#if 0
 #include<iostream>
 #include<algorithm>
+#include<vector>
 using namespace std;
 
 int main()
 {
-	int N;
+	int N, answer=0;
 	cout << "모험가는 총 몇명인가? : ";
-	cout << "각 모험가의"
+	cin >> N;
+	cout << "각 모험가의 공포도를 띄어쓰기로 전부 적어라." << endl;
+	vector<int> feers(N);
+	vector<int> checkstack;
+	for (auto& n : feers) cin >> n;
+
+	//1.먼저 정렬을하자.
+	sort(feers.begin(), feers.end());
+	//2. 탐색을 하면서 최대 인원수가 조정된다. 1일땐 추가 없이 끝 2일땐 하나 더 추가하고 다시 탐색할때
+	//2라서 종료조건을 만족하면 끝
+	for (int i = 0; i < feers.size(); i++) {
+		int now = feers[i];
+		checkstack.push_back(now);
+		if (checkstack.size() == now) {
+			answer++; checkstack.clear();
+		}
+	}
+	
+	cout << endl << answer;
+}
+
+#endif // 1
+/*Q.02. 곱하기 혹은 더하기
+각 자리가 숫자로만 이루어진 문자열 S가 주어졌을때 왼쪽부터 오른쪽으로 하나씩 모든
+숫자를 확인하며 숫자 사이에 'X'혹은 '+' 연산을 넣어 결과적으로 가장 큰 수를 구하는
+프로그램을 작성하라. 단, +보다 X를 먼저 계산하는 일반적인 사칙연산과 달리 순서대로
+이루어진다. 예를들어 02984가 주어지면 0+2x9x8x4 로 576이고 567이면 5x6x7 로 210
+
+<접근방법>
+곱하기가 더하기보다 무조건 크다. 1과 0사이만 아니라면 어떤 숫자를 상대로도 마찬가지
+두개의 문자열을 꺼내서 0 혹은 1이 있는지 확인하고 케이스 2가지 중에 하나를 선택함
+그 다음부터는 하나씩 꺼내면서 계속 반복*/
+#if 1
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+int main() {
+	cout << "숫자로만 이루어진 문자열을 입력하세요." << endl;
+	string numbers;
+	cin >> numbers;
+	vector<int>temp;
+	int answer = 0, tempi;
+	
+	if (numbers.size() <= 1) {
+		cout << "문자열의 길이는 1입니다. 따라서" << endl;
+		cout << numbers[0];
+		return -1;
+	}
+	else {
+		temp.push_back(numbers[0] - '0');
+		temp.push_back(numbers[1] - '0');
+		if (temp[0] <= 1 || temp[1] <= 1) { //둘 중에 하나라도 0이나 1이면 더하기
+			answer = temp[0] + temp[1];
+		}
+		else	answer = temp[0] * temp[1];
+		for (int i = 2; i < numbers.size(); i++) {//만약에 넘버의 사이즈가 2이하라면 실행도 안되겠지.
+			tempi = numbers[i] - '0';
+			if (answer <= 1 || tempi <= 1) {
+				answer += tempi;
+			}
+			else	answer *= tempi;
+		}
+		cout << endl << answer;
+	}
+}
+
+
+#endif
+/*Q03 문자열 뒤집기
+다솜이는 0과 1로만 이루어진 문자열 S를 가지고 있다. 다솜이는 문자열 S에 있는 모든 숫자를 전부 같게 만드려고한다.
+다솜이가 할 수 있는 행동은 S에서 연속된 하나 이상의 숫자를 잡고 모두 뒤집는 것.
+뒤집는 것은 1을 0으로 0을 1로 바꾸는 것을 의미한다. 예를들어 00011000 일때
+전체를 뒤집는 거 1번 11100111
+중간에 0 뒤집으면 111111로 조건을 만족하여 2번이다
+하지만 처음부터 마지막까지 뒤집고 중간부터 중간까지 뒤집을 필요 없이 처음부터 중간에 11을 뒤집으면 00이되어
+00000000이 되어버린다.그러면 최소 횟수 1만으로 만족하는 것이다.
+어디서부터 뒤집을지는 자유다 단 한번 뒤집기 시작하면 끊었다가 다시 어디부터 뒤집는건 안된다. 연속적으로 뒤집어야함.
+그걸 1회로 친다.
+
+<접근방법>
+애초에 다 뒤집을 이유가 있나? 이 문제는 결국 연속되어있는 애들을 뒤집어야 되는 문제이다. 그런데 정답은 
+꼭 1어야 하는것도 꼭 0이어야 하는 것도 아니다. 0으로 만드는게 유리한지 1로 만드는게 유리한지를 체크한다음에
+그냥 연속적인 애들의 구간 만큼이 최소 반복횟수 아닐까? 0이 더 많은지 1이 더 많은지가 아니라 
+연속된 구간의 개수가 중요하다. 어차피 연속된 구간은 인덱스로 접근할 것이다. 나는 pair배열로 인덱스 구간을 집계하여
+저장하는 방식이 적절할거라고 본다. 그리고 배열의 길이를 비교하면 그게 바로 연속된 구간의 개수가 된다.
+*/
+#if 1
+#include <iostream>
+#include<string>
+#include<vector>
+using namespace std;
+
+int main() {
+	string s;
+	cout << "0과 1로만 이루어진 문자열 입력하시오" << endl;
+	cin >> s;
+	int answer = 0, start0 = 0, start1 = 0;
+	vector<pair<int, int>> oneIdxs;
+	vector<pair<int, int>> zeroIdxs;
+	int i = 0;
+	for (int i = 0; i < s.size(); i++) {
+		if(s[i]=='0')
+	}
 }
 
 #endif // 1
