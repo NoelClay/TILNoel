@@ -82,7 +82,7 @@ int main()
 곱하기가 더하기보다 무조건 크다. 1과 0사이만 아니라면 어떤 숫자를 상대로도 마찬가지
 두개의 문자열을 꺼내서 0 혹은 1이 있는지 확인하고 케이스 2가지 중에 하나를 선택함
 그 다음부터는 하나씩 꺼내면서 계속 반복*/
-#if 1
+#if 0
 #include<iostream>
 #include<algorithm>
 #include<vector>
@@ -137,24 +137,64 @@ int main() {
 그냥 연속적인 애들의 구간 만큼이 최소 반복횟수 아닐까? 0이 더 많은지 1이 더 많은지가 아니라 
 연속된 구간의 개수가 중요하다. 어차피 연속된 구간은 인덱스로 접근할 것이다. 나는 pair배열로 인덱스 구간을 집계하여
 저장하는 방식이 적절할거라고 본다. 그리고 배열의 길이를 비교하면 그게 바로 연속된 구간의 개수가 된다.
+<스택>
+연속된 녀석들을 비교할때 가장 유용한건 아마 스택 자료형이 아닐까 한다.
 */
 #if 1
 #include <iostream>
 #include<string>
 #include<vector>
+#include<stack>
 using namespace std;
 
 int main() {
 	string s;
 	cout << "0과 1로만 이루어진 문자열 입력하시오" << endl;
 	cin >> s;
-	int answer = 0, start0 = 0, start1 = 0;
+	int answer = 0, startidx = 0;
 	vector<pair<int, int>> oneIdxs;
 	vector<pair<int, int>> zeroIdxs;
+	stack<int>check;
 	int i = 0;
-	for (int i = 0; i < s.size(); i++) {
-		if(s[i]=='0')
+	/*연속된 숫자를 체크하는건 결국 이전 인덱스와 지금인덱스 혹은 지금인덱스와
+	이후 인덱스가 같은 요소를 저장하고 있는지만 체크하면 된다. 그 변곡점을
+	저장하면 구간을 저장하는 것이 될터이고 그 구간의 개수가 더 적은쪽이 답이다.*/
+	for (int i = 1; i < s.size(); i++) {
+		int j = i - 1; //항상 이전 인덱스를 가르킬 것이다.
+		if (s[j] == s[i]) {
+			continue;
+		}
+		else if (s[j] == '0') { //원래 0이 연속적이었는데 지금 1을 발견한거니까.
+			zeroIdxs.push_back({ startidx, j });
+			startidx = i;
+		}
+		else if (s[j] == '1') {
+			oneIdxs.push_back({ startidx, j });
+			startidx = i;
+		}
 	}
+	//다 돌았으면 한번 체크를 해줘야된다. 변곡점이 마지막에 있었는지 없었는지에
+	//따라 달라진다. 만약 변곡점이 없었다면 하나 추가하면되고, 변곡점이 있었다면
+	//마지막 변곡점에 해당하는 요소를 추가한다.
+	if (s[s.size() - 2] == s[s.size() - 1]) { //같다면
+		if (s[s.size() - 1] == '0') {
+			zeroIdxs.push_back({ startidx, s.size()-1 });
+		}
+		else{
+			oneIdxs.push_back({ startidx, s.size() - 1 });
+		}
+	}
+	else//같지 않다면 이미 변곡점이 하나 생성되어 추가되어 있고 마지막인덱스에
+	{//대한 요소값만 추가해주면 끝
+		if (s[s.size() - 1] == '0') {
+			zeroIdxs.push_back({ s.size() - 1, s.size() - 1 });
+		}
+		else {
+			oneIdxs.push_back({ s.size() - 1, s.size() - 1 });
+		}
+	}
+	int zerogroupcnt = zeroIdxs.size();
+	int onegroupcnt = oneIdxs.size();
 }
 
 #endif // 1
