@@ -28,6 +28,9 @@
     <Filter Include="소스 파일\이것이C++이다_">
       <UniqueIdentifier>{48041956-53bf-4b24-9f3a-892ec68145f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\2023카카오블라인드">
+      <UniqueIdentifier>{53eccdfd-ce13-4dfe-aa3f-7003baa5ad9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_02\Test_2.cpp">
@@ -116,6 +119,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_18\Test_18.cpp">
       <Filter>소스 파일\주간코테_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_19\Test_19.cpp">
+      <Filter>소스 파일\주간코테_</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Real\2023 KAKAO BLIND RECRUITMENT\Q_01.cpp">
+      <Filter>소스 파일\2023카카오블라인드</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Real\2023 KAKAO BLIND RECRUITMENT\Q_02.cpp">
+      <Filter>소스 파일\2023카카오블라인드</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Real\2023 KAKAO BLIND RECRUITMENT\Q_03.cpp">
+      <Filter>소스 파일\2023카카오블라인드</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

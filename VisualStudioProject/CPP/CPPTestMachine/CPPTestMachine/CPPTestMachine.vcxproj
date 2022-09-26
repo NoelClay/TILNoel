@@ -140,6 +140,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\AlgorithmProblemSolvingStrategies\algo_01_01.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Real\2023 KAKAO BLIND RECRUITMENT\Q_01.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Real\2023 KAKAO BLIND RECRUITMENT\Q_02.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Real\2023 KAKAO BLIND RECRUITMENT\Q_03.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_02\Test_2.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_03\Test_3.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_04\Test_4.cpp" />
@@ -157,6 +160,7 @@
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_16\Test_16.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_17\Test_17.cpp" />
     <ClCompile Include="..\..\..\..\CodingTest\Study\week_18\Test_18.cpp" />
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_19\Test_19.cpp" />
     <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch03Greedy.cpp" />
     <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch04Implementcpp.cpp" />
     <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch05DFSBFS.cpp" />
