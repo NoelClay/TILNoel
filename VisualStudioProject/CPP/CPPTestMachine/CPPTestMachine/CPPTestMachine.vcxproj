@@ -170,6 +170,7 @@
     <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch09ShortestPath.cpp" />
     <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch10GraphTheory.cpp" />
     <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch11GreedyPlus.cpp" />
+    <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch12Simulation.cpp" />
     <ClCompile Include="..\..\..\..\ThisIsCPP\TIC_01.cpp" />
     <ClCompile Include="..\..\..\..\ThisIsCPP\TIC_02.cpp" />
   </ItemGroup>

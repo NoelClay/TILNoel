@@ -11,7 +11,7 @@
 ±³ÇÕÂ÷: https://unluckyjung.github.io/cpp/2020/04/24/Set_Func/
 
 */
-#if 1
+#if 0
 #include <string>
 #include <iostream>
 #include <algorithm>
