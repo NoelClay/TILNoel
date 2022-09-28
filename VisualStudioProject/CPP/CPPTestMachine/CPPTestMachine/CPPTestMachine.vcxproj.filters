@@ -135,5 +135,8 @@
     <ClCompile Include="..\..\..\..\ThisIsCodingTest\Ch12Simulation.cpp">
       <Filter>소스 파일\이것이 코딩테스트다_동빈나_</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\CodingTest\Study\week_20\Test_20.cpp">
+      <Filter>소스 파일\주간코테_</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
