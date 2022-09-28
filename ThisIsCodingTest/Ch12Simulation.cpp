@@ -82,5 +82,59 @@ int main() {
 #endif // 1
 
 /* Q09 문자열 압축
+문자열에서 같은 값이 연속해서 나타나는 것을 그 문자의 개수와 반복되는 값으로 표현하여
+더 짧은 문자열로 줄여서 표현하는 알고리즘을 공부하고 있다.
+간단한 예로 aabbaccc의 경우 2a2ba3c 이러한 방식은 연속된 문자가 없을 경우 
+압축효율이 제로라는 단점이 있다.
+ababcdcdababcdcd의 경우에 1개씩이 아니라 2개씩 연속된 문자를 체크한다면
+2ab2cd2ab2cd로 압축이 가능하고 8개씩 자르면 2ababcdcd이다.
+압축할 문자열 s가 매개변수로 주어질때, 위에 설명한 방법으로 1개 이상 단위로 문자열을 잘라
+압축하여 표현한 문자열 중 가장 짧은 것의 길이를 return하도록 solution함수를 완성하라.
+
+aabbaccc					2a2ba3c				7
+ababcdcdababcdcd			2ababcdcd			9
+abcabcdede					2abcdede			8
+abcabcabcabcdededededede	2abcabc2dedede		14
+xababcdcdababcdcd			xababcdcdababcdcd	17
+
+<접근방법>
+문자열의 길이는 1000개까지이고 전부 소문자이다.
+결국 핵심은 연속된 상태가 어떻게 되어있는지 파악을 어떻게 할까
+1000개의 문자를 1000번 반복해서 모든 경우의 수를 조사한다음에 가장 짧은 길이를
+반환하는것이 결국 답이 아닐까?
+길이사이즈만큼 반복하는건 의미가 없을 듯 길이의 반만큼만 조사해보면 될듯
+즉 100만회 이상 넘어갈 일이 없네.
+
 
 */
+#if 0
+#include<iostream>
+#include<string>
+#include<algorithm>
+#include<vector>
+#include<stack>
+using namespace std;
+
+int solution(string s) {
+	stack<string>stackstring;
+
+	vector<int>answer;
+	//i개 연속될때 2개 이상부터 앞에 숫자 붙이고, 1개 이상이면 앞에 아무것도 안붙음. 
+	for (int i = 1; i <= s.size() / 2; i++) {
+		vector<string>tempString;
+		int j = 0;
+		while (1) {
+			
+		}
+	}
+}
+
+int main() {
+	vector<string> arr = { "aabbaccc","ababcdcdababcdcd",
+	"abcabcdede", "abcabcabcabcdededededede", "xababcdcdababcdcd" };
+	for (auto n : arr) {
+		solution(n);
+	}
+}
+
+#endif // 1
